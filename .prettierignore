@@ -1,0 +1,7 @@
+.next
+node_modules
+.npm-cache
+public/images
+package-lock.json
+test-results
+playwright-report
