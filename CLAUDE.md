@@ -69,13 +69,30 @@ After any change, keep **typecheck + lint + build** green and run the **Playwrig
   `npm install --cache ./.npm-cache ...` (or `sudo chown -R 501:20 ~/.npm` to fix permanently).
 - **Fonts** (Bricolage Grotesque + Inter) download via next/font at build — needs network once.
 - Placeholder images are branded SVGs in `public/images/`; real assets go in the same paths
-  (see `public/images/README.md`). Official logo → `public/brand/` then swap `LogoBadge`.
+  (see `public/images/README.md`).
+- **Logo:** the real badge is `public/brand/logo.png` (used full-size in the footer via `<Logo>`).
+  The dark navbar needs a light/white version (a navy-on-white badge looks like a tile on dark) —
+  navbar uses `<Wordmark>` / a white logo variant from `components/layout/Logo.tsx`. Keep navbar +
+  footer visually consistent with the real mark.
 
-## Deploy
+## Deploy — LIVE
 
-Vercel (region `bom1`) + Cloudflare DNS. Full steps incl. exact DNS records: **`DEPLOY.md`**.
-Env vars: `RESEND_API_KEY`, `CONTACT_FROM_EMAIL`, `CONTACT_TO_EMAIL`, `NEXT_PUBLIC_SITE_URL`,
-optional `NEXT_PUBLIC_SANITY_*`. See `.env.example`.
+**Live at https://bigadtruck.com** (HTTPS valid). Hosting + pipeline:
+- **GitHub:** `velsgames/bigadtruck` (public). `git push` to `main` **auto-deploys** to Vercel prod.
+- **Vercel:** project `bigadtruck` under the **"ERP LMS" (Hobby)** workspace — that IS the personal
+  account (Hobby = personal, just renamed; there is no separate Personal scope on this account).
+  Region `bom1`. Local `.vercel/project.json` links it; `vercel --prod` also deploys from local.
+- **Cloudflare DNS** (zone for bigadtruck.com): apex `A → 216.198.79.1, 64.29.17.1`,
+  `www CNAME → cname.vercel-dns.com`, all **DNS-only** (grey cloud). Email MX/SPF left intact.
+  www currently serves 200 without redirecting to apex (canonical tags mitigate; optional tidy-up).
+- **To ship a change:** commit + `git push` (auto-deploys), or `vercel --prod`.
+
+Env vars (set in Vercel project settings): `RESEND_API_KEY`, `CONTACT_FROM_EMAIL`,
+`CONTACT_TO_EMAIL`, `NEXT_PUBLIC_SITE_URL`, optional `NEXT_PUBLIC_SANITY_*`. See `.env.example`.
+Full DNS/setup steps: **`DEPLOY.md`**.
+
+> ⚠️ **Contact form does NOT email yet** — no `RESEND_API_KEY` set, so `/api/contact` returns
+> success but only logs server-side. Add the key + redeploy to make leads reach `vivek@bigadtruck.com`.
 
 ## Key facts (don't fabricate beyond these)
 

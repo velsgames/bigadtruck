@@ -7,7 +7,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, X, ChevronRight } from 'lucide-react';
 import { nav, type NavItem } from '@/content/site';
 import { ButtonLink } from '@/components/ui/Button';
-import { Wordmark } from '@/components/layout/Logo';
+import { Logo } from '@/components/layout/Logo';
 import { cn } from '@/lib/utils';
 
 export function Navbar() {
@@ -49,7 +49,7 @@ export function Navbar() {
     >
       <div className="container flex h-[72px] items-center justify-between gap-4">
         <Link href="/" aria-label="Bigadtruck Group — home" className="relative z-10">
-          <Wordmark />
+          <Logo priority className="h-12 w-auto" />
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">

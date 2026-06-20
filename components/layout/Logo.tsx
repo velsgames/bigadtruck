@@ -9,7 +9,9 @@ import { cn } from '@/lib/utils';
 export function Logo({ className, priority }: { className?: string; priority?: boolean }) {
   return (
     <Image
-      src="/brand/logo.png"
+      // White variant of the official badge — generated for dark backgrounds.
+      // The full-colour badge (logo.png) is for light surfaces.
+      src="/brand/logo-white.png"
       alt="Bigadtruck Group"
       width={270}
       height={269}
