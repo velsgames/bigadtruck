@@ -3,109 +3,167 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Image as DreiImage } from '@react-three/drei';
+import { Image as DreiImage, Float, ContactShadows } from '@react-three/drei';
 import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 import type * as THREE from 'three';
 import type { CaseStudy } from '@/content/caseStudies';
 
-const SPACING = 2.7;
-const DEPTH = 1.7;
-const ANGLE = 0.5;
+const RADIUS = 3.6;
+const ARC = 0.52; // radians between adjacent cards along the arc
+const CARD_W = 2.7;
+const CARD_H = 1.7;
 
-/** Signed shortest distance from card i to the active index, around the ring. */
-function ringOffset(i: number, active: number, total: number) {
-  let d = i - active;
-  if (d > total / 2) d -= total;
-  if (d < -total / 2) d += total;
+function wrappedDiff(i: number, pos: number, total: number) {
+  let d = i - pos;
+  while (d > total / 2) d -= total;
+  while (d < -total / 2) d += total;
   return d;
 }
 
-function Card({
-  url,
-  offset,
-  onSelect,
-}: {
-  url: string;
-  offset: number;
-  onSelect: () => void;
-}) {
-  const ref = useRef<THREE.Group>(null);
+/** A single textured card that continuously eases toward its arc slot. */
+function Card({ url, getOffset }: { url: string; getOffset: () => number }) {
+  const g = useRef<THREE.Group>(null);
   const [hovered, setHovered] = useState(false);
 
   useFrame((_, dt) => {
-    const g = ref.current;
-    if (!g) return;
-    const tx = offset * SPACING;
-    const tz = -Math.abs(offset) * DEPTH;
-    const ry = -offset * ANGLE;
-    const target = (offset === 0 ? 1.18 : 0.9) * (hovered ? 1.04 : 1);
-    const k = 1 - Math.pow(0.0015, dt); // frame-rate-independent smoothing
-    g.position.x += (tx - g.position.x) * k;
-    g.position.z += (tz - g.position.z) * k;
-    g.rotation.y += (ry - g.rotation.y) * k;
-    g.scale.x += (target - g.scale.x) * k;
-    g.scale.y += (target - g.scale.y) * k;
+    const grp = g.current;
+    if (!grp) return;
+    const o = getOffset();
+    const ang = o * ARC;
+    const tx = Math.sin(ang) * RADIUS;
+    const tz = Math.cos(ang) * RADIUS - RADIUS; // front card sits near z = 0
+    const ry = -ang * 0.9;
+    const center = Math.max(0, 1 - Math.abs(o)); // 1 at front, →0 to the sides
+    const targetScale = (0.82 + center * 0.42) * (hovered ? 1.05 : 1);
+    const k = 1 - Math.pow(0.0001, dt); // frame-rate-independent easing
+    grp.position.x += (tx - grp.position.x) * k;
+    grp.position.z += (tz - grp.position.z) * k;
+    grp.rotation.y += (ry - grp.rotation.y) * k;
+    const s = grp.scale.x + (targetScale - grp.scale.x) * k;
+    grp.scale.setScalar(s);
   });
 
   return (
-    <group
-      ref={ref}
-      onClick={onSelect}
-      onPointerOver={() => setHovered(true)}
-      onPointerOut={() => setHovered(false)}
-    >
-      <DreiImage url={url} scale={[2.4, 1.5]} radius={0.1} toneMapped={false} transparent />
+    <group ref={g} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)}>
+      <Float speed={2.2} rotationIntensity={0.18} floatIntensity={0.35}>
+        <DreiImage url={url} scale={[CARD_W, CARD_H]} radius={0.12} toneMapped={false} transparent />
+      </Float>
+    </group>
+  );
+}
+
+function Rig({
+  studies,
+  posRef,
+  pausedRef,
+  velRef,
+  onActive,
+}: {
+  studies: CaseStudy[];
+  posRef: React.MutableRefObject<number>;
+  pausedRef: React.MutableRefObject<boolean>;
+  velRef: React.MutableRefObject<number>;
+  onActive: (i: number) => void;
+}) {
+  const root = useRef<THREE.Group>(null);
+  const lastIdx = useRef(-1);
+  const total = studies.length;
+
+  useFrame((state, dt) => {
+    // Continuous drift + momentum from dragging.
+    if (!pausedRef.current) posRef.current += dt * 0.32;
+    posRef.current += velRef.current;
+    velRef.current *= 0.9;
+
+    // Report the front-most card for the caption.
+    const idx = ((Math.round(posRef.current) % total) + total) % total;
+    if (idx !== lastIdx.current) {
+      lastIdx.current = idx;
+      onActive(idx);
+    }
+
+    // Mouse parallax tilt of the whole rig.
+    const r = root.current;
+    if (r) {
+      r.rotation.y += (state.pointer.x * 0.22 - r.rotation.y) * 0.05;
+      r.rotation.x += (-state.pointer.y * 0.12 - r.rotation.x) * 0.05;
+    }
+  });
+
+  return (
+    <group ref={root}>
+      {studies.map((s, i) => (
+        <Card key={s.slug} url={s.cover} getOffset={() => wrappedDiff(i, posRef.current, total)} />
+      ))}
+      <ContactShadows position={[0, -1.5, 0]} opacity={0.45} scale={14} blur={2.6} far={3.2} color="#000814" />
     </group>
   );
 }
 
 export default function CaseStudies3DScene({ studies }: { studies: CaseStudy[] }) {
+  const posRef = useRef(0);
+  const pausedRef = useRef(false);
+  const velRef = useRef(0);
+  const dragRef = useRef<{ on: boolean; x: number; last: number }>({ on: false, x: 0, last: 0 });
   const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const total = studies.length;
 
-  // Auto-advance unless the visitor is interacting.
-  useEffect(() => {
-    if (paused || total <= 1) return;
-    const t = setInterval(() => setActive((a) => (a + 1) % total), 4200);
-    return () => clearInterval(t);
-  }, [paused, total]);
-
-  const go = (dir: number) => {
-    setPaused(true);
-    setActive((a) => (a + dir + total) % total);
+  // Briefly pause auto-drift after an explicit interaction, then resume.
+  const resumeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const nudge = (delta: number) => {
+    pausedRef.current = true;
+    posRef.current = Math.round(posRef.current) + delta;
+    if (resumeTimer.current) clearTimeout(resumeTimer.current);
+    resumeTimer.current = setTimeout(() => (pausedRef.current = false), 4000);
   };
+  useEffect(() => {
+    return () => {
+      if (resumeTimer.current) clearTimeout(resumeTimer.current);
+    };
+  }, []);
 
   const current = studies[active];
   if (!current) return null;
 
+  const onDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    dragRef.current = { on: true, x: e.clientX, last: e.clientX };
+    pausedRef.current = true;
+  };
+  const onMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const d = dragRef.current;
+    if (!d.on) return;
+    const dx = e.clientX - d.last;
+    d.last = e.clientX;
+    posRef.current -= dx * 0.012;
+    velRef.current = -dx * 0.012;
+  };
+  const endDrag = () => {
+    if (!dragRef.current.on) return;
+    dragRef.current.on = false;
+    if (resumeTimer.current) clearTimeout(resumeTimer.current);
+    resumeTimer.current = setTimeout(() => (pausedRef.current = false), 3500);
+  };
+
   return (
-    <div
-      className="relative"
-      onPointerDown={() => setPaused(true)}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
-      <div className="h-[clamp(20rem,46vh,30rem)] w-full">
-        <Canvas dpr={[1, 1.75]} camera={{ position: [0, 0, 6], fov: 34 }}>
+    <div className="relative">
+      <div
+        className="h-[clamp(22rem,52vh,34rem)] w-full cursor-grab touch-pan-y active:cursor-grabbing"
+        onPointerDown={onDown}
+        onPointerMove={onMove}
+        onPointerUp={endDrag}
+        onMouseEnter={() => (pausedRef.current = true)}
+        onMouseLeave={() => {
+          endDrag();
+          if (!dragRef.current.on) pausedRef.current = false;
+        }}
+      >
+        <Canvas dpr={[1, 1.75]} camera={{ position: [0, 0.25, 6.4], fov: 32 }}>
           <ambientLight intensity={1} />
-          {studies.map((s, i) => (
-            <Card
-              key={s.slug}
-              url={s.cover}
-              offset={ringOffset(i, active, total)}
-              onSelect={() => {
-                setPaused(true);
-                setActive(i);
-              }}
-            />
-          ))}
+          <Rig studies={studies} posRef={posRef} pausedRef={pausedRef} velRef={velRef} onActive={setActive} />
         </Canvas>
       </div>
 
-      {/* Caption for the active card */}
-      <div className="mt-6 flex flex-col items-center gap-4 text-center">
-        <div className="min-h-[4.5rem]">
+      <div className="mt-4 flex flex-col items-center gap-4 text-center">
+        <div className="min-h-[4.75rem]">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted">
             {current.industry} · {current.service}
           </p>
@@ -119,7 +177,7 @@ export default function CaseStudies3DScene({ studies }: { studies: CaseStudy[] }
 
         <div className="flex items-center gap-3">
           <button
-            onClick={() => go(-1)}
+            onClick={() => nudge(-1)}
             aria-label="Previous case study"
             className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink transition-colors hover:bg-ink hover:text-bg"
           >
@@ -132,7 +190,7 @@ export default function CaseStudies3DScene({ studies }: { studies: CaseStudy[] }
             View case study <ArrowUpRight className="h-4 w-4" />
           </Link>
           <button
-            onClick={() => go(1)}
+            onClick={() => nudge(1)}
             aria-label="Next case study"
             className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink transition-colors hover:bg-ink hover:text-bg"
           >
@@ -140,21 +198,7 @@ export default function CaseStudies3DScene({ studies }: { studies: CaseStudy[] }
           </button>
         </div>
 
-        <div className="mt-1 flex gap-1.5" role="tablist" aria-label="Case studies">
-          {studies.map((s, i) => (
-            <button
-              key={s.slug}
-              role="tab"
-              aria-selected={i === active}
-              aria-label={`Show ${s.title}`}
-              onClick={() => {
-                setPaused(true);
-                setActive(i);
-              }}
-              className={`h-1 rounded-full transition-all ${i === active ? 'w-8 bg-accent' : 'w-4 bg-line'}`}
-            />
-          ))}
-        </div>
+        <p className="text-xs text-muted">Drag to explore · auto-rotating</p>
       </div>
     </div>
   );

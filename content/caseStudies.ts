@@ -53,7 +53,7 @@ export const caseStudies: CaseStudy[] = [
     year: '2025',
     summary:
       'Identity rebuild, headless e-commerce and a connected launch across Meta, Google and OOH — one team, one timeline.',
-    cover: '/images/work/retail-relaunch.svg',
+    cover: 'https://images.unsplash.com/photo-1601598851547-4302969d0614?w=1600&q=80&auto=format&fit=crop',
     hero: { value: '3.1x', label: 'Return on ad spend' },
     challenge:
       'A regional retail chain had grown faster than its brand. A dated identity, a slow website and disconnected agencies meant marketing spend leaked and the in-store experience never matched the ambition. They needed everything fixed — fast — before the festive season.',
@@ -91,7 +91,7 @@ export const caseStudies: CaseStudy[] = [
     year: '2025',
     summary:
       'A vernacular landing-page system and always-on lead media that captured and routed 42,000+ qualified enquiries to counsellors.',
-    cover: '/images/work/admissions.svg',
+    cover: 'https://images.unsplash.com/photo-1576495199011-eb94736d05d6?w=1600&q=80&auto=format&fit=crop',
     hero: { value: '42,000+', label: 'Qualified enquiries' },
     challenge:
       'A university wanted to grow admissions across three states without drowning its counsellors in junk enquiries. Previous campaigns generated volume but no quality, and leads went cold before anyone called back.',
@@ -129,7 +129,7 @@ export const caseStudies: CaseStudy[] = [
     year: '2025',
     summary:
       'Monthly social, reels, Meta ads and WhatsApp campaigns across multiple dealership locations — turning attention into booked showroom visits.',
-    cover: '/images/work/dealership.svg',
+    cover: 'https://images.unsplash.com/photo-1605152276979-6a07fc883a70?w=1600&q=80&auto=format&fit=crop',
     hero: { value: '−34%', label: 'Cost per enquiry' },
     challenge:
       'A multi-location automotive dealership group was posting inconsistently and buying ads with no clear line to showroom enquiries. They needed an always-on engine that produced content, ran paid and WhatsApp campaigns, and delivered trackable leads to each branch.',
@@ -165,7 +165,7 @@ export const caseStudies: CaseStudy[] = [
     year: '2025',
     summary:
       'A fast, immersive property portal with 3D walkthroughs and integrated lead capture for a real-estate developer.',
-    cover: '/images/work/proptech.svg',
+    cover: 'https://images.unsplash.com/photo-1515263487990-61b07816b324?w=1600&q=80&auto=format&fit=crop',
     hero: { value: '2.4x', label: 'Site enquiries' },
     challenge:
       'A developer was launching a flagship project but had only renders and a slow brochure-style site. They needed a portal that could sell units off-plan and feed sales-qualified leads to their team.',
@@ -199,7 +199,7 @@ export const caseStudies: CaseStudy[] = [
     year: '2024',
     summary:
       'Photoreal 3D visualization and design documentation that let a developer market and pre-sell before ground-breaking.',
-    cover: '/images/work/architecture.svg',
+    cover: 'https://images.unsplash.com/photo-1488972685288-c3fd157d7c7a?w=1600&q=80&auto=format&fit=crop',
     hero: { value: 'Pre-sales', label: 'Created off-plan' },
     challenge:
       'A developer needed to generate demand and clear approvals for a mixed-use scheme — before any physical construction could begin.',
@@ -232,7 +232,7 @@ export const caseStudies: CaseStudy[] = [
     year: '2024',
     summary:
       'A feasibility-backed, fully costed and compliant Detailed Project Report, packaged to the funding body’s exact norms.',
-    cover: '/images/work/dpr.svg',
+    cover: 'https://images.unsplash.com/photo-1529926691761-20fb82067c71?w=1600&q=80&auto=format&fit=crop',
     hero: { value: '1st', label: 'Submission sanctioned' },
     challenge:
       'An infrastructure body needed a bankable DPR to secure funding — and could not afford the delay of a re-submission cycle.',
