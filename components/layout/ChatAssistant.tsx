@@ -47,6 +47,20 @@ export function ChatAssistant() {
   const [sending, setSending] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const launcherRef = useRef<HTMLButtonElement>(null);
+
+  // Escape closes the panel and returns focus to the launcher.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setOpen(false);
+        launcherRef.current?.focus();
+      }
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open]);
 
   useEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -98,6 +112,7 @@ export function ChatAssistant() {
     <>
       {/* Launcher */}
       <motion.button
+        ref={launcherRef}
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-label={open ? 'Close assistant' : 'Chat with our assistant'}
@@ -128,6 +143,7 @@ export function ChatAssistant() {
             exit={{ opacity: 0, y: 24, scale: 0.96 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
             role="dialog"
+            aria-modal="true"
             aria-label="Bigadtruck assistant"
             className="fixed bottom-24 right-3 left-3 z-[60] flex h-[min(70vh,560px)] flex-col overflow-hidden rounded-3xl border border-line bg-surface shadow-2xl sm:left-auto sm:right-6 sm:w-[400px]"
           >

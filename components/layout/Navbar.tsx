@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -28,6 +28,18 @@ export function Navbar() {
     setOpen(false);
     setActiveMenu(null);
   }, [pathname]);
+
+  // Escape closes the mega-menu and the mobile drawer.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setActiveMenu(null);
+        setOpen(false);
+      }
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, []);
 
   // Lock body scroll when the mobile drawer is open.
   useEffect(() => {
@@ -109,6 +121,9 @@ function NavLink({
     <Link
       href={item.href}
       onMouseEnter={onHover}
+      onFocus={onHover}
+      aria-haspopup={item.children ? 'true' : undefined}
+      aria-expanded={item.children ? active : undefined}
       className={cn(
         'relative rounded-full px-4 py-2 text-sm font-medium transition-colors',
         active || isCurrent ? 'text-ink' : 'text-muted hover:text-ink',
@@ -158,6 +173,10 @@ function MegaMenu({ item }: { item: NavItem }) {
 }
 
 function MobileDrawer({ onClose }: { onClose: () => void }) {
+  const firstLink = useRef<HTMLAnchorElement>(null);
+  useEffect(() => {
+    firstLink.current?.focus();
+  }, []);
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -167,9 +186,14 @@ function MobileDrawer({ onClose }: { onClose: () => void }) {
       className="fixed inset-0 top-[72px] z-40 overflow-y-auto bg-bg lg:hidden"
     >
       <nav className="container flex flex-col gap-1 py-6" aria-label="Mobile">
-        {nav.map((item) => (
+        {nav.map((item, idx) => (
           <div key={item.label} className="border-b border-line py-2">
-            <Link href={item.href} className="block py-2 font-display text-2xl font-medium" onClick={onClose}>
+            <Link
+              ref={idx === 0 ? firstLink : undefined}
+              href={item.href}
+              className="block py-2 font-display text-2xl font-medium"
+              onClick={onClose}
+            >
               {item.label}
             </Link>
             {item.children && (
