@@ -7,6 +7,27 @@ import { cn } from '@/lib/utils';
 
 type Msg = { role: 'user' | 'assistant'; content: string };
 
+const URL_RE = /(https?:\/\/[^\s]+)/g;
+
+/** Render plain text with any URLs as clickable links. */
+function linkify(text: string) {
+  return text.split(URL_RE).map((part, i) =>
+    /^https?:\/\//.test(part) ? (
+      <a
+        key={i}
+        href={part}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="font-medium underline underline-offset-2 hover:opacity-80"
+      >
+        {part.includes('wa.me') ? 'Message us on WhatsApp →' : part}
+      </a>
+    ) : (
+      part
+    ),
+  );
+}
+
 const GREETING: Msg = {
   role: 'assistant',
   content:
@@ -127,13 +148,13 @@ export function ChatAssistant() {
                 <div key={i} className={cn('flex', m.role === 'user' ? 'justify-end' : 'justify-start')}>
                   <div
                     className={cn(
-                      'max-w-[85%] text-pretty rounded-2xl px-4 py-2.5 text-sm leading-relaxed',
+                      'max-w-[85%] whitespace-pre-wrap text-pretty rounded-2xl px-4 py-2.5 text-sm leading-relaxed',
                       m.role === 'user'
                         ? 'bg-accent text-white'
-                        : 'border border-line bg-bg/40 text-ink',
+                        : 'border border-line bg-surface text-ink',
                     )}
                   >
-                    {m.content}
+                    {linkify(m.content)}
                   </div>
                 </div>
               ))}

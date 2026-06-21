@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import { z } from 'zod';
 import { deliverLead } from '@/lib/leads';
+import { generateReply } from '@/lib/assistant';
 import { site, contact } from '@/content/site';
 
 export const runtime = 'nodejs';
@@ -108,14 +109,14 @@ export async function POST(req: Request) {
 
   const key = process.env.ANTHROPIC_API_KEY;
   if (!key) {
-    // Graceful fallback — assistant isn't configured yet, but never leave the visitor stuck.
-    return NextResponse.json({
-      ok: true,
-      reply:
-        `Thanks for reaching out! Our AI assistant isn't switched on just yet — but the team would love to help. ` +
-        `Drop us a line at ${contact.email} or WhatsApp/call ${contact.phoneDisplay}, or use the contact form and we'll get right back to you.`,
-      leadCaptured: false,
-    });
+    // Default: keyless automatic assistant — no external API, no per-message cost.
+    const result = generateReply(parsed.data.messages);
+    let leadCaptured = false;
+    if (result.submit) {
+      const outcome = await handleSubmitLead(result.submit);
+      leadCaptured = outcome.startsWith('SENT');
+    }
+    return NextResponse.json({ ok: true, reply: result.reply, leadCaptured });
   }
 
   const client = new Anthropic({ apiKey: key });
