@@ -5,6 +5,7 @@ import { SmoothScroll } from '@/components/layout/SmoothScroll';
 import { Cursor } from '@/components/layout/Cursor';
 import { PageTransition } from '@/components/layout/PageTransition';
 import { ChatAssistant } from '@/components/layout/ChatAssistant';
+import { WhatsAppButton } from '@/components/layout/WhatsAppButton';
 
 /**
  * Chrome for the public marketing site: smooth scroll, custom cursor, navbar,
@@ -35,6 +36,7 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
         <PageTransition>{children}</PageTransition>
       </main>
       <Footer />
+      <WhatsAppButton />
       <ChatAssistant />
     </div>
   );

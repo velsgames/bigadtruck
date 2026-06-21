@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
-import { Mail, Phone, MessageCircle, MapPin } from 'lucide-react';
+import { Mail, Phone, MessageCircle } from 'lucide-react';
 import { pageMeta } from '@/lib/seo';
-import { contact, socials, site } from '@/content/site';
+import { contact, socials } from '@/content/site';
 import { PageHero } from '@/components/sections/PageHero';
 import { ContactForm } from '@/components/sections/ContactForm';
 
@@ -57,29 +57,6 @@ export default function ContactPage() {
             </div>
 
             <div className="rounded-3xl border border-line bg-surface p-7">
-              <h2 className="font-display text-lg font-semibold text-ink">Our offices</h2>
-              <ul className="mt-5 space-y-5">
-                {contact.offices.map((o) => (
-                  <li key={o.city}>
-                    <div className="flex items-center gap-2 text-ink">
-                      <MapPin className="h-4 w-4 text-accent" />
-                      <span className="font-medium">{o.label}</span>
-                    </div>
-                    <p className="mt-1 pl-6 text-sm text-muted">{o.address}</p>
-                    <a
-                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(o.mapQuery)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-1 inline-block pl-6 text-xs text-accent hover:underline"
-                    >
-                      View on map →
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="rounded-3xl border border-line bg-surface p-7">
               <h2 className="font-display text-lg font-semibold text-ink">Follow along</h2>
               <ul className="mt-5 flex flex-wrap gap-3 text-sm">
                 {socials.map((s) => (
@@ -97,17 +74,6 @@ export default function ContactPage() {
               </ul>
             </div>
           </div>
-        </div>
-
-        {/* Map */}
-        <div className="mt-12 overflow-hidden rounded-3xl border border-line">
-          <iframe
-            title={`${site.name} offices — Pune & Mumbai`}
-            src="https://maps.google.com/maps?q=Pune%2C%20Maharashtra&t=&z=9&ie=UTF8&iwloc=&output=embed"
-            className="h-[360px] w-full"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
         </div>
       </section>
     </>

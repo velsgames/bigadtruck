@@ -42,7 +42,7 @@ export function Navbar() {
       className={cn(
         'fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-expo',
         scrolled || activeMenu
-          ? 'border-b border-line bg-bg/80 backdrop-blur-xl'
+          ? 'border-b border-line bg-[#0a1a2b]/85 backdrop-blur-xl'
           : 'border-b border-transparent bg-transparent',
       )}
       onMouseLeave={() => setActiveMenu(null)}
@@ -134,7 +134,7 @@ function MegaMenu({ item }: { item: NavItem }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-      className="absolute inset-x-0 top-full hidden border-b border-line bg-bg/95 backdrop-blur-xl lg:block"
+      className="absolute inset-x-0 top-full hidden border-b border-line bg-bg shadow-2xl shadow-black/30 backdrop-blur-xl lg:block"
     >
       <div className="container grid grid-cols-2 gap-2 py-8">
         {item.children.map((child) => (
