@@ -159,7 +159,8 @@ function Field({
 
 function inputCls(hasError: boolean) {
   return cn(
-    'w-full rounded-xl border bg-bg/40 px-4 py-3 text-ink placeholder:text-muted transition-colors focus:outline-none',
-    hasError ? 'border-red-400/60 focus:border-red-400' : 'border-line focus:border-accent',
+    'w-full rounded-xl border bg-surface px-4 py-3 text-ink placeholder:text-muted shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-accent/30',
+    '[&>option]:bg-surface [&>option]:text-ink',
+    hasError ? 'border-red-400/70 focus:border-red-400' : 'border-line focus:border-accent',
   );
 }

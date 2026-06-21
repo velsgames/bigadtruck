@@ -36,6 +36,36 @@ const faqs = [
     answer:
       'Yes — through Buzzmore Media, our specialist arm for government advertising, the GeM ecosystem, public-awareness campaigns and lead generation.',
   },
+  {
+    question: 'How quickly can you start, and how long do projects take?',
+    answer:
+      'We can usually kick off within a week of agreeing scope. Timelines depend on the work — a campaign or landing-page system can go live in 2–4 weeks, a full brand or website build in 6–12 weeks, and a DPR in roughly 4–8 weeks. We agree the schedule up front and hold to it.',
+  },
+  {
+    question: 'Do you work on monthly retainers or one-off projects?',
+    answer:
+      'Both. Many clients run us as an always-on marketing partner on a monthly retainer (content, media, reporting), while others bring us in for a defined project. We scope whichever fits where you are right now.',
+  },
+  {
+    question: 'How will I know it’s working?',
+    answer:
+      'Every engagement is tied to a measurable goal — enquiries, cost per lead, return on ad spend, admissions, site speed — not vanity clicks. You get clear, regular reporting against that goal, and we double down on what moves it.',
+  },
+  {
+    question: 'What do you need from us to get started?',
+    answer:
+      'A short conversation about your goal, your audience and your budget. From there we handle the heavy lifting — strategy, creative, build and media. Any brand assets, logins or past data you have speed things up, but we can start from scratch too.',
+  },
+  {
+    question: 'Why one agency instead of separate specialists?',
+    answer:
+      'Because hand-offs are where time, money and consistency leak. Brand, web, media and delivery sit in one team on one plan, so there’s a single owner accountable for the result — not four vendors pointing at each other.',
+  },
+  {
+    question: 'Which industries do you work with?',
+    answer:
+      'We’ve delivered across 75+ industries — education, real estate, automotive, retail, healthcare, manufacturing, government, infrastructure and more. The playbook adapts; the discipline of tying work to outcomes stays the same.',
+  },
 ];
 
 export default async function ServicesPage() {

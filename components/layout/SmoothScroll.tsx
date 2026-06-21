@@ -5,14 +5,17 @@ import Lenis from 'lenis';
 import { usePrefersReducedMotion } from '@/lib/useReducedMotion';
 
 /**
- * Lenis smooth scroll. Skipped entirely under prefers-reduced-motion so the
- * browser's native (instant) scrolling is used.
+ * Lenis smooth scroll. Skipped under prefers-reduced-motion AND on touch /
+ * coarse-pointer devices — on mobile, smoothing fights native momentum
+ * scrolling and feels janky, so phones get the browser's native scroll.
  */
 export function SmoothScroll() {
   const reduced = usePrefersReducedMotion();
 
   useEffect(() => {
     if (reduced) return;
+    // Touch / coarse pointer (phones, most tablets): use native scrolling.
+    if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) return;
     const lenis = new Lenis({
       duration: 1.1,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),

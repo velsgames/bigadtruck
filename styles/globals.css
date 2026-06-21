@@ -65,6 +65,34 @@ body {
   color: #fff;
 }
 
+/* Form controls: render native chrome (dropdown popup, caret, scrollbars,
+   spell-check) in the same palette as the section so text never goes
+   white-on-white. Default sections are the dark navy theme. */
+input,
+select,
+textarea {
+  color-scheme: dark;
+}
+[data-theme='light'] input,
+[data-theme='light'] select,
+[data-theme='light'] textarea {
+  color-scheme: light;
+}
+option {
+  background-color: var(--surface);
+  color: var(--ink);
+}
+
+/* Keep browser autofill on-brand instead of the default pale lavender. */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--ink);
+  caret-color: var(--ink);
+  -webkit-box-shadow: 0 0 0 1000px var(--surface) inset;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
 /* Accessible focus ring */
 :focus-visible {
   outline: 2px solid var(--accent);
