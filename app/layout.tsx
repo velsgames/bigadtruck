@@ -31,8 +31,9 @@ export const metadata: Metadata = {
     siteName: site.name,
     title: `${site.name} — Advertising, Marketing & Technology`,
     description: site.description,
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: site.name }],
   },
-  twitter: { card: 'summary_large_image' },
+  twitter: { card: 'summary_large_image', images: ['/opengraph-image'] },
   robots: { index: true, follow: true },
 };
 

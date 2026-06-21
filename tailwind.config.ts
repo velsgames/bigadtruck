@@ -14,19 +14,19 @@ const config: Config = {
     },
     extend: {
       colors: {
-        bg: 'var(--bg)',
-        surface: 'var(--surface)',
-        paper: 'var(--paper)',
-        ink: 'var(--ink)',
-        muted: 'var(--muted)',
+        bg: 'rgb(var(--bg-rgb) / <alpha-value>)',
+        surface: 'rgb(var(--surface-rgb) / <alpha-value>)',
+        paper: 'rgb(var(--paper-rgb) / <alpha-value>)',
+        ink: 'rgb(var(--ink-rgb) / <alpha-value>)',
+        muted: 'rgb(var(--muted-rgb) / <alpha-value>)',
         line: 'var(--line)',
         accent: {
-          DEFAULT: 'var(--accent)',
+          DEFAULT: 'rgb(var(--accent-rgb) / <alpha-value>)',
           soft: 'var(--accent-soft)',
         },
-        electric: 'var(--electric)',
-        navy: 'var(--navy)',
-        steel: 'var(--steel)',
+        electric: 'rgb(var(--electric-rgb) / <alpha-value>)',
+        navy: 'rgb(var(--navy-rgb) / <alpha-value>)',
+        steel: 'rgb(var(--steel-rgb) / <alpha-value>)',
       },
       fontFamily: {
         display: ['var(--font-display)', 'system-ui', 'sans-serif'],

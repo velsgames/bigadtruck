@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+import { pageMeta } from '@/lib/seo';
 import { Hero } from '@/components/sections/Hero';
 import { TrustStrip } from '@/components/sections/TrustStrip';
 import { DivisionsBento } from '@/components/sections/DivisionsBento';
@@ -8,6 +10,17 @@ import { ProcessStepper } from '@/components/sections/ProcessStepper';
 import { Testimonials } from '@/components/sections/Testimonials';
 import { CTASection } from '@/components/sections/CTASection';
 import { getDivisions, getFeaturedCaseStudies, getServices, getTestimonials } from '@/lib/cms';
+
+export const metadata: Metadata = {
+  ...pageMeta({
+    title: 'Bigadtruck Group — Advertising, Marketing & Technology',
+    description:
+      'A 360° advertising, marketing & technology agency in Pune & Mumbai. One team for strategy, creative, media, web, government media and project delivery.',
+    path: '/',
+  }),
+  // Bypass the root title.template so the home title isn't suffixed twice.
+  title: { absolute: 'Bigadtruck Group — Advertising, Marketing & Technology' },
+};
 
 export default async function HomePage() {
   const [divisions, featured, services, testimonials] = await Promise.all([

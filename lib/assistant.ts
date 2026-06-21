@@ -23,7 +23,20 @@ export type EngineResult = {
 };
 
 const EMAIL_RE = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/i;
-const PHONE_RE = /(\+?\d[\d\s-]{8,}\d)/;
+const PHONE_CANDIDATE = /\+?\d[\d\s-]{6,}\d/g;
+
+/**
+ * Extract a plausible phone number — 10–13 digits, and not a numeric range like
+ * "10000 - 50000" (spaced dash), which would otherwise look like a phone.
+ */
+function extractPhone(text: string): string | undefined {
+  for (const m of text.matchAll(PHONE_CANDIDATE)) {
+    const raw = m[0];
+    const digits = raw.replace(/\D/g, '');
+    if (digits.length >= 10 && digits.length <= 13 && !/\d\s-\s\d/.test(raw)) return raw.trim();
+  }
+  return undefined;
+}
 
 // Marker placed in the completion reply so we can tell a lead was already sent.
 const DONE_MARKER = 'passed your details to the team';
@@ -147,7 +160,7 @@ function deriveLead(messages: ChatMsg[]): LeadDraft & { complete: boolean } {
   const allUserText = users.map((m) => m.content).join('\n');
 
   const email = allUserText.match(EMAIL_RE)?.[0];
-  const phone = allUserText.match(PHONE_RE)?.[0]?.trim();
+  const phone = extractPhone(allUserText);
 
   // name = the user reply that directly followed our name prompt
   let name: string | undefined;
@@ -156,7 +169,7 @@ function deriveLead(messages: ChatMsg[]): LeadDraft & { complete: boolean } {
     if (messages[i].role !== 'user') continue;
     const prev = lastAssistant(messages, i) || '';
     const val = messages[i].content.trim();
-    if (!name && prev.includes(ASK_NAME) && !EMAIL_RE.test(val) && !PHONE_RE.test(val)) {
+    if (!name && prev.includes(ASK_NAME) && !EMAIL_RE.test(val) && !extractPhone(val)) {
       name = val.replace(/^(i am|i'm|im|my name is|this is)\s+/i, '').split(/[.,\n]/)[0].slice(0, 60);
     }
     if (!need && prev.includes(ASK_NEED)) need = val.slice(0, 500);
@@ -183,7 +196,7 @@ export function generateReply(messages: ChatMsg[]): EngineResult {
     !alreadySubmitted &&
     (isLeadIntent(text) ||
       EMAIL_RE.test(last?.content || '') ||
-      PHONE_RE.test(last?.content || '') ||
+      Boolean(extractPhone(last?.content || '')) ||
       priorAssistant.includes(ASK_NAME) ||
       priorAssistant.includes(ASK_CONTACT) ||
       priorAssistant.includes(ASK_NEED));

@@ -58,7 +58,6 @@ export function organizationJsonLd() {
       addressLocality: o.city,
       addressRegion: 'Maharashtra',
       addressCountry: 'IN',
-      streetAddress: o.address,
     })),
     founder: { '@type': 'Person', name: site.founder.fullName, jobTitle: site.founder.role },
   };
@@ -68,6 +67,7 @@ export function localBusinessJsonLd() {
   return contact.offices.map((o) => ({
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
+    '@id': `${SITE_URL}/#localbusiness-${o.city.toLowerCase()}`,
     name: `${site.name} — ${o.city}`,
     image: `${SITE_URL}/opengraph-image`,
     url: SITE_URL,
@@ -78,7 +78,6 @@ export function localBusinessJsonLd() {
       addressLocality: o.city,
       addressRegion: 'Maharashtra',
       addressCountry: 'IN',
-      streetAddress: o.address,
     },
     areaServed: 'IN',
   }));

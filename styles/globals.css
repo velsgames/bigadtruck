@@ -3,20 +3,32 @@
 @tailwind utilities;
 
 :root {
-  /* Core surfaces — derived from the brand logo (deep navy + steel gray) */
+  /* Core surfaces — derived from the brand logo (deep navy + steel gray).
+     Each colour is kept both as a hex value (for direct var(--x) use in CSS/SVG)
+     and as RGB channels (--x-rgb) so Tailwind opacity modifiers like bg-surface/60
+     resolve to rgb(... / .6). Keep the two in sync. */
   --bg: #0a1a2b; /* deep navy statement sections */
+  --bg-rgb: 10 26 43;
   --surface: #112437; /* raised navy panels/cards */
+  --surface-rgb: 17 36 55;
   --paper: #ffffff;
+  --paper-rgb: 255 255 255;
   --ink: #eef3f8; /* near-white text on navy */
+  --ink-rgb: 238 243 248;
   --muted: #93a6ba; /* steel gray (echoes "AD TRUCK") */
+  --muted-rgb: 147 166 186;
   --line: rgba(255, 255, 255, 0.1);
 
   /* Brand */
   --accent: #2e5bff; /* confident brand blue — CTAs, links, highlights */
+  --accent-rgb: 46 91 255;
   --accent-soft: rgba(46, 91, 255, 0.16);
   --electric: #38bdf8; /* sky — secondary tech/government accent */
+  --electric-rgb: 56 189 248;
   --navy: #0a1a2b;
+  --navy-rgb: 10 26 43;
   --steel: #6e8aa6;
+  --steel-rgb: 110 138 166;
 
   /* Motion */
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -26,9 +38,13 @@
 /* Light "paper" sections invert the palette via a data attribute */
 [data-theme='light'] {
   --bg: #ffffff;
+  --bg-rgb: 255 255 255;
   --surface: #f3f6f9;
+  --surface-rgb: 243 246 249;
   --ink: #0a1a2b;
+  --ink-rgb: 10 26 43;
   --muted: #51677c;
+  --muted-rgb: 81 103 124;
   --line: rgba(10, 26, 43, 0.1);
 }
 

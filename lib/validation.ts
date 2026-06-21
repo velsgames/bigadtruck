@@ -34,8 +34,10 @@ export const contactSchema = z.object({
   // The select's placeholder submits '' — treat that as "no budget selected".
   budget: z.enum(budgetRanges).optional().or(z.literal('')),
   message: z.string().min(10, 'Tell us a little more (10+ characters)').max(2000),
-  // Honeypot — must stay empty.
-  website: z.string().max(0).optional(),
+  // Honeypot — accept any value at the schema level so a bot that fills it still
+  // passes validation; the route then silently drops it (a max(0) here would 422
+  // and reveal the trap instead of faking success).
+  website: z.string().optional(),
 });
 
 export type ContactInput = z.infer<typeof contactSchema>;

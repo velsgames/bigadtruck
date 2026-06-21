@@ -18,12 +18,13 @@ export function Testimonials({ testimonials }: { testimonials: Testimonial[] }) 
   );
 
   useEffect(() => {
-    if (reduced) return;
+    if (reduced || count <= 1) return;
     const t = setInterval(() => setIndex((i) => (i + 1) % count), 6500);
     return () => clearInterval(t);
   }, [count, reduced]);
 
   const active = testimonials[index];
+  if (!count || !active) return null;
 
   return (
     <section className="border-y border-line bg-surface/40">

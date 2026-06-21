@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 
 type Msg = { role: 'user' | 'assistant'; content: string };
 
-const URL_RE = /(https?:\/\/[^\s]+)/g;
+const URL_RE = /(https?:\/\/[^\s]+[^\s.,!?)\]])/g;
 
 /** Render plain text with any URLs as clickable links. */
 function linkify(text: string) {
