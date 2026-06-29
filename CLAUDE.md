@@ -29,15 +29,19 @@ After any change, keep **typecheck + lint + build** green and run the **Playwrig
 ## Architecture
 
 - `app/(marketing)/` — public pages (route group; the group `layout.tsx` holds the navbar,
-  footer, smooth scroll, custom cursor, page transitions + JSON-LD). URLs are unaffected by the group.
+  footer, smooth scroll, custom cursor, page transitions, the WhatsApp button, the "Truck" chat
+  assistant + JSON-LD). URLs are unaffected by the group.
 - `app/studio/[[...tool]]/` — embedded Sanity Studio (full-screen, outside the marketing chrome).
-- `app/api/contact/` — lead + newsletter endpoint (Resend if `RESEND_API_KEY`, else console stub).
+- `app/api/contact/` — lead + newsletter endpoint (delivers via `lib/leads.ts`).
+- `app/api/chat/` — the "Truck" AI assistant endpoint (lead-capturing chatbot). Keyless by
+  default (`lib/assistant.ts`); upgrades to Claude when `ANTHROPIC_API_KEY` is set. See below.
 - `app/layout.tsx` — root: `<html>/<body>`, fonts, site metadata only.
 - `components/` — `cards/`, `layout/`, `sections/`, `ui/`. Client components carry `'use client'`.
 - `content/*.ts` — **all editable copy** (site, divisions, services, caseStudies, industries,
   testimonials, process). Edit these, not the components.
-- `lib/` — `cms.ts` (content access w/ Sanity fallback), `seo.ts`, `validation.ts` (zod),
-  `animations.ts`, `utils.ts` (cn), `useReducedMotion.ts`.
+- `lib/` — `cms.ts` (content access w/ Sanity fallback), `leads.ts` (shared lead delivery),
+  `assistant.ts` (keyless chat engine), `seo.ts`, `validation.ts` (zod), `animations.ts`,
+  `utils.ts` (cn), `useReducedMotion.ts`, `sanity/` (client + queries).
 - `sanity/` — Studio schemas + env. `sanity.config.ts` at root.
 - `styles/globals.css` — design tokens as CSS variables. `app/fonts.ts` — next/font.
 
@@ -49,12 +53,30 @@ After any change, keep **typecheck + lint + build** green and run the **Playwrig
 - To change text/divisions/services/work/industries/testimonials, edit `content/*.ts`.
 - Brand colors/fonts: `styles/globals.css` tokens + `app/fonts.ts`.
 
+## AI assistant ("Truck") & leads
+
+- The chat widget (`components/layout/ChatAssistant.tsx`) posts to **`/api/chat`**. It is
+  **keyless and automatic by default**: with no `ANTHROPIC_API_KEY`, the route runs the local
+  rule-based engine in `lib/assistant.ts` (answers common questions, extracts name/email/phone,
+  runs a lead-capture flow) — no external API, no per-message cost. When `ANTHROPIC_API_KEY`
+  **is** set, the route instead drives **Claude** (`@anthropic-ai/sdk`, model `claude-opus-4-8`)
+  with a `submit_lead` tool in a short manual tool loop. Don't break the keyless path.
+- **Both** the contact form (`/api/contact`) and the assistant (`/api/chat`) deliver enquiries
+  through **`lib/leads.ts`** → Resend if `RESEND_API_KEY` is set, else a server-console stub.
+  Every lead lands in the same inbox (`CONTACT_TO_EMAIL`, default `vivek@bigadtruck.com`).
+- The 3D case-study showcase (`components/sections/CaseStudies3D.tsx` + `…3DScene.tsx`) uses
+  three.js / `@react-three/fiber` / `drei`, loaded via `next/dynamic({ ssr: false })` so it stays
+  out of the initial bundle. It has an accessible SSR/no-JS static grid fallback and is disabled
+  under `prefers-reduced-motion` — keep all three behaviours intact.
+
 ## Conventions
 
 - TypeScript strict; no `any` (the CMS adapter is the one justified, eslint-disabled exception).
 - Respect `prefers-reduced-motion` everywhere; custom cursor + magnetic buttons are
-  desktop/fine-pointer only. Keep the hero accent SVG-based (no LCP-blocking 3D).
-- Mobile-first Tailwind. Keep First Load JS lean (home target ~157 KB).
+  desktop/fine-pointer only. Keep the **hero accent SVG-based** (no LCP-blocking 3D); the only
+  3D on the site is the below-the-fold case-study scene, lazy-loaded with a static fallback.
+- Mobile-first Tailwind. Keep First Load JS lean — never import three.js / `next-sanity` into a
+  shared/initial bundle (both are dynamically/server-only loaded; see Gotchas).
 - Real, plain-spoken, outcome-led copy in the "truck delivers a full load to every destination"
   voice — used sparingly.
 
@@ -68,6 +90,10 @@ After any change, keep **typecheck + lint + build** green and run the **Playwrig
 - **npm cache:** the global `~/.npm` cache has root-owned files (EACCES). Use a local cache:
   `npm install --cache ./.npm-cache ...` (or `sudo chown -R 501:20 ~/.npm` to fix permanently).
 - **Fonts** (Bricolage Grotesque + Inter) download via next/font at build — needs network once.
+- **Remote images:** `next.config.mjs` only allows `images.unsplash.com`, `plus.unsplash.com`
+  and `cdn.sanity.io`. Add a host there before using its images, or the build/render fails.
+- **Security headers** live in two places — `next.config.mjs` `headers()` (HSTS, X-Frame-Options,
+  CSP for SVGs, Permissions-Policy, etc.) **and** `vercel.json`. Keep them in sync when editing.
 - Placeholder images are branded SVGs in `public/images/`; real assets go in the same paths
   (see `public/images/README.md`).
 - **Logo:** the real badge is `public/brand/logo.png` (used full-size in the footer via `<Logo>`).
@@ -84,15 +110,16 @@ After any change, keep **typecheck + lint + build** green and run the **Playwrig
   Region `bom1`. Local `.vercel/project.json` links it; `vercel --prod` also deploys from local.
 - **Cloudflare DNS** (zone for bigadtruck.com): apex `A → 216.198.79.1, 64.29.17.1`,
   `www CNAME → cname.vercel-dns.com`, all **DNS-only** (grey cloud). Email MX/SPF left intact.
-  www currently serves 200 without redirecting to apex (canonical tags mitigate; optional tidy-up).
+  `vercel.json` now 301-redirects `www → apex`.
 - **To ship a change:** commit + `git push` (auto-deploys), or `vercel --prod`.
 
 Env vars (set in Vercel project settings): `RESEND_API_KEY`, `CONTACT_FROM_EMAIL`,
-`CONTACT_TO_EMAIL`, `NEXT_PUBLIC_SITE_URL`, optional `NEXT_PUBLIC_SANITY_*`. See `.env.example`.
-Full DNS/setup steps: **`DEPLOY.md`**.
+`CONTACT_TO_EMAIL`, `NEXT_PUBLIC_SITE_URL`, optional `ANTHROPIC_API_KEY` (upgrades the chat
+assistant to Claude) and `NEXT_PUBLIC_SANITY_*`. See `.env.example`. Full DNS/setup steps: **`DEPLOY.md`**.
 
-> ⚠️ **Contact form does NOT email yet** — no `RESEND_API_KEY` set, so `/api/contact` returns
-> success but only logs server-side. Add the key + redeploy to make leads reach `vivek@bigadtruck.com`.
+> ⚠️ **Email delivery is off until `RESEND_API_KEY` is set** — without it, both `/api/contact`
+> and the assistant return success but only log leads server-side. Add the key + redeploy to make
+> leads reach `vivek@bigadtruck.com`. (The chat assistant works either way — it's keyless.)
 
 ## Key facts (don't fabricate beyond these)
 
