@@ -45,8 +45,16 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${fontDisplay.variable} ${fontSans.variable}`}>
-      <body className="min-h-screen antialiased">{children}</body>
+    <html lang="en" className={`${fontDisplay.variable} ${fontSans.variable}`} suppressHydrationWarning>
+      <body className="min-h-screen antialiased">
+        {/* Opt into JS-driven entrance reveals before first paint. If this never
+            runs (no JS), the `.reveal` base state stays visible — content is
+            never hidden. Runs synchronously above the page content. */}
+        <script
+          dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }}
+        />
+        {children}
+      </body>
     </html>
   );
 }

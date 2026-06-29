@@ -1,14 +1,29 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
 
 /**
- * Lightweight per-route fade/rise transition. Keyed on pathname so it replays
- * on navigation. Kept subtle to avoid layout shift / LCP penalties.
+ * Per-route fade/rise transition — applied ONLY on client-side navigation,
+ * never on the first paint. The very first render (and any no-JS / reduced-
+ * motion / throttled client) returns the content fully visible, so the whole
+ * page can never get stuck behind a JS-driven `opacity:0` (the failure that
+ * left mobile / iOS Low-Power-Mode visitors staring at a blank screen).
  */
 export function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const reduce = useReducedMotion();
+  const firstPath = useRef(pathname);
+  const [navigated, setNavigated] = useState(false);
+
+  useEffect(() => {
+    if (pathname !== firstPath.current) setNavigated(true);
+  }, [pathname]);
+
+  // First load, reduced motion, or no JS: render visible, no animation gate.
+  if (!navigated || reduce) return <>{children}</>;
+
   return (
     <motion.div
       key={pathname}

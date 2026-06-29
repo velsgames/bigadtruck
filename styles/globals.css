@@ -172,3 +172,66 @@ input:-webkit-autofill:focus {
     animation: none !important;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Resilient entrance reveals
+   Base state is VISIBLE, so content can never get stuck behind JS. The `js`
+   class (added by an inline script before paint) opts into the animation, which
+   runs as a CSS transition on the compositor — unaffected by a throttled
+   requestAnimationFrame (iOS Low Power Mode) that freezes JS-driven motion.
+   No-JS clients and crawlers receive fully-rendered, indexable content.
+--------------------------------------------------------------------------- */
+.reveal,
+.reveal-line,
+.reveal-item {
+  opacity: 1;
+}
+.js .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s var(--ease-expo),
+    transform 0.7s var(--ease-expo);
+  transition-delay: var(--reveal-delay, 0s);
+}
+.js .reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+.js .reveal-line {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform 0.9s var(--ease-expo);
+  transition-delay: var(--reveal-delay, 0s);
+}
+.js .reveal-line.is-in {
+  transform: translateY(0);
+}
+.js .reveal-group .reveal-item {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.6s var(--ease-expo),
+    transform 0.6s var(--ease-expo);
+}
+.js .reveal-group.is-in .reveal-item {
+  opacity: 1;
+  transform: none;
+}
+.js .reveal-group.is-in .reveal-item:nth-child(2) { transition-delay: 0.06s; }
+.js .reveal-group.is-in .reveal-item:nth-child(3) { transition-delay: 0.12s; }
+.js .reveal-group.is-in .reveal-item:nth-child(4) { transition-delay: 0.18s; }
+.js .reveal-group.is-in .reveal-item:nth-child(5) { transition-delay: 0.24s; }
+.js .reveal-group.is-in .reveal-item:nth-child(6) { transition-delay: 0.30s; }
+.js .reveal-group.is-in .reveal-item:nth-child(n + 7) { transition-delay: 0.36s; }
+
+/* Reduced motion: never hide — show everything immediately. */
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal,
+  .js .reveal-line,
+  .js .reveal-group .reveal-item {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

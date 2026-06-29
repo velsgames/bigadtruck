@@ -17,8 +17,8 @@ export const site = {
   yearsLabel: '9+ years',
   industriesServed: '75+',
   founder: {
-    name: 'V. Vyas',
-    fullName: 'Vivek Vyas',
+    name: 'Apoorva Vyas',
+    fullName: 'Apoorva Vyas',
     role: 'Founder & CEO',
   },
 } as const;
