@@ -91,7 +91,7 @@ for (const [slug, label, accent] of work) {
 
 // About / founder / generic
 write('about/story.svg', svg({ label: 'The Big Ad Truck', sub: 'Pune · Mumbai', w: 1400, h: 1000 }));
-write('about/founder.svg', svg({ label: 'V. Vyas', sub: 'Founder & CEO', w: 1000, h: 1200, accent: SKY }));
+write('about/founder.svg', svg({ label: 'Apoorva Vyas', sub: 'Founder & CEO', w: 1000, h: 1200, accent: SKY }));
 write('og-cover.svg', svg({ label: 'Bigadtruck Group', sub: 'A truckload of ideas, delivered.', w: 1200, h: 630 }));
 
 console.log('\nPlaceholders generated.');

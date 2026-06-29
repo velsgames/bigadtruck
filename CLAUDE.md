@@ -5,7 +5,7 @@ Guidance for Claude Code (and humans) working in this repo.
 ## What this is
 
 The **Bigadtruck Group** marketing website — a 360° advertising, marketing & technology
-agency (Pune & Mumbai; Buzzmore arm in Nagpur). Founder/CEO: V. Vyas. Domain: **bigadtruck.com**.
+agency (Pune & Mumbai; Buzzmore arm in Nagpur). Founder/CEO: Apoorva Vyas. Domain: **bigadtruck.com**.
 
 Bespoke **Next.js 14 (App Router) + TypeScript** site. Award-style motion, navy/blue/steel-gray
 brand (derived from the logo — NOT amber/orange). Holmes (Qode) theme is *loose* inspiration only.
@@ -75,6 +75,14 @@ After any change, keep **typecheck + lint + build** green and run the **Playwrig
 - Respect `prefers-reduced-motion` everywhere; custom cursor + magnetic buttons are
   desktop/fine-pointer only. Keep the **hero accent SVG-based** (no LCP-blocking 3D); the only
   3D on the site is the below-the-fold case-study scene, lazy-loaded with a static fallback.
+- **Entrance reveals must never hide content behind JS.** Use the CSS-driven reveal system
+  (`.reveal` / `.reveal-line` / `.reveal-group`+`.reveal-item` in `styles/globals.css`, driven
+  by `ScrollReveal`/`ScrollRevealGroup`/`ScrollRevealItem` via IntersectionObserver). The base
+  state is **visible**; the `js` class (set by an inline script in `app/layout.tsx` before paint)
+  opts into the animation, which runs as a **CSS transition on the compositor** — so it survives a
+  throttled `requestAnimationFrame` (iOS Low Power Mode froze framer's JS reveals and left mobile
+  visitors on a blank page). Don't gate first-paint or above-the-fold visibility on a framer
+  `initial={{ opacity: 0 }}`; `PageTransition` only animates on client-side route changes.
 - Mobile-first Tailwind. Keep First Load JS lean — never import three.js / `next-sanity` into a
   shared/initial bundle (both are dynamically/server-only loaded; see Gotchas).
 - Real, plain-spoken, outcome-led copy in the "truck delivers a full load to every destination"
@@ -123,8 +131,9 @@ assistant to Claude) and `NEXT_PUBLIC_SANITY_*`. See `.env.example`. Full DNS/se
 
 ## Key facts (don't fabricate beyond these)
 
-- Contact: `vivek@bigadtruck.com`, phone **+91 79723 61076**. Offices: Pune & Mumbai (city-level
-  only — no street address); Buzzmore operates from Nagpur.
+- Founder & CEO: **Apoorva Vyas** (set in `content/site.ts` → `site.founder`; flows to the About
+  page, JSON-LD and the chat assistant). Contact: `vivek@bigadtruck.com`, phone **+91 79723 61076**.
+  Offices: Pune & Mumbai (city-level only — no street address); Buzzmore operates from Nagpur.
 - Divisions: Bigadtruck (core), Buzzmore Media (digital marketing + lead gen, Nagpur),
   DPR Creation, Architectural Services, Project Management.
 - Case-study clients/metrics are illustrative placeholders. Don't publish real client names
