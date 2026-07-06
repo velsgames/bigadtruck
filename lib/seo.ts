@@ -83,6 +83,39 @@ export function localBusinessJsonLd() {
   }));
 }
 
+/** BlogPosting schema for a Digital BAT article. */
+export function articleJsonLd({
+  title,
+  description,
+  slug,
+  date,
+  author,
+  image,
+}: {
+  title: string;
+  description: string;
+  slug: string;
+  date: string;
+  author: string;
+  image: string;
+}) {
+  const url = `${SITE_URL}/blog/${slug}`;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    '@id': `${url}#article`,
+    headline: title,
+    description,
+    datePublished: date,
+    dateModified: date,
+    image: image.startsWith('http') ? image : `${SITE_URL}${image}`,
+    author: { '@type': 'Organization', name: author, url: SITE_URL },
+    publisher: { '@id': `${SITE_URL}/#organization` },
+    mainEntityOfPage: url,
+    url,
+  };
+}
+
 /** Service schema for a division detail page. */
 export function serviceJsonLd(name: string, description: string, path: string) {
   return {

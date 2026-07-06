@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="WhatsApp &amp; performance">
+  <defs>
+    <linearGradient id="bg688" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0a1a2b"/><stop offset="1" stop-color="#13314e"/>
+    </linearGradient>
+    <radialGradient id="gl688" cx="0.75" cy="0.2" r="0.9">
+      <stop stop-color="#38bdf8" stop-opacity="0.4"/><stop offset="1" stop-color="#38bdf8" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg688)"/>
+  <rect width="1600" height="900" fill="url(#gl688)"/>
+  <g fill="none" stroke="#fff" stroke-opacity="0.9" stroke-width="6">
+        <path d="M470 300 h360 a26 26 0 0 1 26 26 v150 a26 26 0 0 1 -26 26 h-250 l-70 60 v-60 h-40 a26 26 0 0 1 -26 -26 v-150 a26 26 0 0 1 26 -26 z" fill="#38bdf8" fill-opacity="0.2"/>
+        <path d="M760 470 h360 a26 26 0 0 1 26 26 v130 a26 26 0 0 1 -26 26 h-40 v55 l-70 -55 h-250 a26 26 0 0 1 -26 -26 v-130 a26 26 0 0 1 26 -26 z" fill="#fff" fill-opacity="0.08"/>
+      </g>
+  <text x="80" y="750" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700" letter-spacing="3" fill="#38bdf8">DIGITAL BAT</text>
+  <text x="80" y="810" font-family="Inter, Arial, sans-serif" font-size="52" font-weight="700" fill="#ffffff">WhatsApp &amp; performance</text>
+</svg>

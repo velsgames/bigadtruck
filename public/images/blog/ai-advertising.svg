@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="AI in advertising">
+  <defs>
+    <linearGradient id="bg599" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0a1a2b"/><stop offset="1" stop-color="#13314e"/>
+    </linearGradient>
+    <radialGradient id="gl599" cx="0.75" cy="0.2" r="0.9">
+      <stop stop-color="#2e5bff" stop-opacity="0.4"/><stop offset="1" stop-color="#2e5bff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg599)"/>
+  <rect width="1600" height="900" fill="url(#gl599)"/>
+  <g stroke="#fff" stroke-opacity="0.55" stroke-width="4">
+        <line x1="620" y1="300" x2="800" y2="450"/><line x1="620" y1="600" x2="800" y2="450"/>
+        <line x1="800" y1="450" x2="1000" y2="330"/><line x1="800" y1="450" x2="1000" y2="560"/>
+        <line x1="1000" y1="330" x2="1120" y2="450"/><line x1="1000" y1="560" x2="1120" y2="450"/>
+      </g>
+      <g fill="#2e5bff">
+        <circle cx="620" cy="300" r="20"/><circle cx="620" cy="600" r="20"/>
+        <circle cx="800" cy="450" r="28" fill="#fff"/>
+        <circle cx="1000" cy="330" r="20"/><circle cx="1000" cy="560" r="20"/><circle cx="1120" cy="450" r="20"/>
+      </g>
+  <text x="80" y="750" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700" letter-spacing="3" fill="#2e5bff">DIGITAL BAT</text>
+  <text x="80" y="810" font-family="Inter, Arial, sans-serif" font-size="52" font-weight="700" fill="#ffffff">AI in advertising</text>
+</svg>

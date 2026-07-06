@@ -20,6 +20,7 @@ import {
   servicesQuery,
   industriesQuery,
   testimonialsQuery,
+  postsQuery,
 } from '@/lib/sanity/queries';
 
 import { divisions as localDivisions, type Division } from '@/content/divisions';
@@ -27,6 +28,7 @@ import { caseStudies as localCaseStudies, type CaseStudy } from '@/content/caseS
 import { services as localServices, type Service } from '@/content/services';
 import { industries as localIndustries, type Industry } from '@/content/industries';
 import { testimonials as localTestimonials, type Testimonial } from '@/content/testimonials';
+import { posts as localPosts, type Post } from '@/content/posts';
 
 /** Fetch from Sanity, falling back to local seed data on empty/error. */
 async function fromSanityOrLocal<T>(query: string, local: T[], normalize?: (rows: any[]) => T[]) {
@@ -93,4 +95,28 @@ export async function getIndustries(): Promise<Industry[]> {
 
 export async function getTestimonials(): Promise<Testimonial[]> {
   return fromSanityOrLocal<Testimonial>(testimonialsQuery, localTestimonials);
+}
+
+// Blog / insights ---------------------------------------------------------
+export async function getPosts(): Promise<Post[]> {
+  const rows = await fromSanityOrLocal<Post>(postsQuery, localPosts, (r) =>
+    r.map((p) => ({
+      ...p,
+      cover: p.cover || '/images/blog/insight.svg',
+      tags: p.tags || [],
+      body: p.body || [],
+    })),
+  );
+  // Newest first, regardless of source.
+  return [...rows].sort((a, b) => (a.date < b.date ? 1 : -1));
+}
+
+export async function getPost(slug: string): Promise<Post | undefined> {
+  return (await getPosts()).find((p) => p.slug === slug);
+}
+
+export async function getFeaturedPosts(limit = 3): Promise<Post[]> {
+  const all = await getPosts();
+  const featured = all.filter((p) => p.featured);
+  return (featured.length ? featured : all).slice(0, limit);
 }

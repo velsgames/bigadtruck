@@ -80,8 +80,18 @@ export const nav: NavItem[] = [
   },
   { label: 'Work', href: '/work' },
   { label: 'Industries', href: '/industries' },
+  { label: 'Digital BAT', href: '/blog' },
   { label: 'About', href: '/about' },
 ];
+
+/** The editorial arm — advertising, digital & tech insights (Afaqs/Social-Samosa style). */
+export const blog = {
+  name: 'Digital BAT',
+  path: '/blog',
+  tagline: 'Advertising, digital & marketing-tech — unpacked by Bigadtruck.',
+  description:
+    'Digital BAT is Bigadtruck Group’s editorial desk: original takes on advertising, out-of-home, digital, media and marketing technology across Pune, Mumbai and India.',
+} as const;
 
 export const footerNav = [
   {
@@ -90,6 +100,7 @@ export const footerNav = [
       { label: 'About', href: '/about' },
       { label: 'Divisions', href: '/divisions' },
       { label: 'Work', href: '/work' },
+      { label: 'Digital BAT', href: '/blog' },
       { label: 'Industries', href: '/industries' },
       { label: 'Careers', href: '/careers' },
       { label: 'Contact', href: '/contact' },

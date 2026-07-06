@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Out-of-Home advertising">
+  <defs>
+    <linearGradient id="bg622" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0a1a2b"/><stop offset="1" stop-color="#13314e"/>
+    </linearGradient>
+    <radialGradient id="gl622" cx="0.75" cy="0.2" r="0.9">
+      <stop stop-color="#2e5bff" stop-opacity="0.4"/><stop offset="1" stop-color="#2e5bff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg622)"/>
+  <rect width="1600" height="900" fill="url(#gl622)"/>
+  <g stroke="#fff" stroke-opacity="0.9" stroke-width="6" fill="none">
+        <rect x="520" y="250" width="560" height="300" rx="10" fill="#2e5bff" fill-opacity="0.18"/>
+        <line x1="600" y1="550" x2="600" y2="720"/><line x1="1000" y1="550" x2="1000" y2="720"/>
+        <line x1="470" y1="720" x2="1130" y2="720"/>
+        <circle cx="1010" cy="320" r="26" fill="#2e5bff" stroke="none"/>
+      </g>
+  <text x="80" y="750" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700" letter-spacing="3" fill="#2e5bff">DIGITAL BAT</text>
+  <text x="80" y="810" font-family="Inter, Arial, sans-serif" font-size="52" font-weight="700" fill="#ffffff">Out-of-Home advertising</text>
+</svg>

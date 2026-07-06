@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Bankable DPRs">
+  <defs>
+    <linearGradient id="bg649" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0a1a2b"/><stop offset="1" stop-color="#13314e"/>
+    </linearGradient>
+    <radialGradient id="gl649" cx="0.75" cy="0.2" r="0.9">
+      <stop stop-color="#38bdf8" stop-opacity="0.4"/><stop offset="1" stop-color="#38bdf8" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg649)"/>
+  <rect width="1600" height="900" fill="url(#gl649)"/>
+  <g fill="none" stroke="#fff" stroke-opacity="0.9" stroke-width="6">
+        <rect x="600" y="250" width="400" height="470" rx="14" fill="#38bdf8" fill-opacity="0.16"/>
+        <line x1="660" y1="330" x2="880" y2="330"/><line x1="660" y1="390" x2="940" y2="390"/>
+        <g stroke="none" fill="#fff" fill-opacity="0.9">
+          <rect x="660" y="560" width="50" height="110"/><rect x="740" y="510" width="50" height="160"/>
+          <rect x="820" y="470" width="50" height="200"/><rect x="900" y="540" width="50" height="130"/>
+        </g>
+      </g>
+  <text x="80" y="750" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700" letter-spacing="3" fill="#38bdf8">DIGITAL BAT</text>
+  <text x="80" y="810" font-family="Inter, Arial, sans-serif" font-size="52" font-weight="700" fill="#ffffff">Bankable DPRs</text>
+</svg>
