@@ -89,16 +89,75 @@ for (const [slug, label, accent] of work) {
   write(`work/gallery-${g}.svg`, svg({ label: `Gallery ${g.toUpperCase()}`, w: 1200, h: 900, accent: i % 2 ? SKY : ACCENT })),
 );
 
-// Digital BAT — blog / insights covers
-const blog = [
-  ['ooh-advertising', 'Out-of-Home', ACCENT],
-  ['whatsapp-marketing', 'WhatsApp Marketing', SKY],
-  ['ai-advertising', 'AI & Advertising', ACCENT],
-  ['dpr-bankable', 'Bankable DPRs', SKY],
-  ['insight', 'Digital BAT', ACCENT],
+// Digital BAT — editorial covers with a topic-specific motif per article.
+function motif(kind, accent) {
+  const a = accent;
+  switch (kind) {
+    case 'billboard': // OOH — a hoarding on posts
+      return `<g stroke="#fff" stroke-opacity="0.9" stroke-width="6" fill="none">
+        <rect x="520" y="250" width="560" height="300" rx="10" fill="${a}" fill-opacity="0.18"/>
+        <line x1="600" y1="550" x2="600" y2="720"/><line x1="1000" y1="550" x2="1000" y2="720"/>
+        <line x1="470" y1="720" x2="1130" y2="720"/>
+        <circle cx="1010" cy="320" r="26" fill="${a}" stroke="none"/>
+      </g>`;
+    case 'chat': // WhatsApp — two chat bubbles
+      return `<g fill="none" stroke="#fff" stroke-opacity="0.9" stroke-width="6">
+        <path d="M470 300 h360 a26 26 0 0 1 26 26 v150 a26 26 0 0 1 -26 26 h-250 l-70 60 v-60 h-40 a26 26 0 0 1 -26 -26 v-150 a26 26 0 0 1 26 -26 z" fill="${a}" fill-opacity="0.2"/>
+        <path d="M760 470 h360 a26 26 0 0 1 26 26 v130 a26 26 0 0 1 -26 26 h-40 v55 l-70 -55 h-250 a26 26 0 0 1 -26 -26 v-130 a26 26 0 0 1 26 -26 z" fill="#fff" fill-opacity="0.08"/>
+      </g>`;
+    case 'ai': // AI — a node network
+      return `<g stroke="#fff" stroke-opacity="0.55" stroke-width="4">
+        <line x1="620" y1="300" x2="800" y2="450"/><line x1="620" y1="600" x2="800" y2="450"/>
+        <line x1="800" y1="450" x2="1000" y2="330"/><line x1="800" y1="450" x2="1000" y2="560"/>
+        <line x1="1000" y1="330" x2="1120" y2="450"/><line x1="1000" y1="560" x2="1120" y2="450"/>
+      </g>
+      <g fill="${a}">
+        <circle cx="620" cy="300" r="20"/><circle cx="620" cy="600" r="20"/>
+        <circle cx="800" cy="450" r="28" fill="#fff"/>
+        <circle cx="1000" cy="330" r="20"/><circle cx="1000" cy="560" r="20"/><circle cx="1120" cy="450" r="20"/>
+      </g>`;
+    case 'doc': // DPR — a document with chart bars
+      return `<g fill="none" stroke="#fff" stroke-opacity="0.9" stroke-width="6">
+        <rect x="600" y="250" width="400" height="470" rx="14" fill="${a}" fill-opacity="0.16"/>
+        <line x1="660" y1="330" x2="880" y2="330"/><line x1="660" y1="390" x2="940" y2="390"/>
+        <g stroke="none" fill="#fff" fill-opacity="0.9">
+          <rect x="660" y="560" width="50" height="110"/><rect x="740" y="510" width="50" height="160"/>
+          <rect x="820" y="470" width="50" height="200"/><rect x="900" y="540" width="50" height="130"/>
+        </g>
+      </g>`;
+    default: // generic — a dotted signal
+      return `<g fill="${a}"><circle cx="700" cy="450" r="16"/><circle cx="800" cy="450" r="16" fill="#fff"/><circle cx="900" cy="450" r="16"/></g>`;
+  }
+}
+
+function editorialSvg({ title, kind, accent = ACCENT, w = 1600, h = 900 }) {
+  const id = Math.abs(hash(title)) % 1000;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img" aria-label="${esc(title)}">
+  <defs>
+    <linearGradient id="bg${id}" x1="0" y1="0" x2="${w}" y2="${h}" gradientUnits="userSpaceOnUse">
+      <stop stop-color="${NAVY}"/><stop offset="1" stop-color="${NAVY2}"/>
+    </linearGradient>
+    <radialGradient id="gl${id}" cx="0.75" cy="0.2" r="0.9">
+      <stop stop-color="${accent}" stop-opacity="0.4"/><stop offset="1" stop-color="${accent}" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="${w}" height="${h}" fill="url(#bg${id})"/>
+  <rect width="${w}" height="${h}" fill="url(#gl${id})"/>
+  ${motif(kind, accent)}
+  <text x="80" y="${h - 150}" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700" letter-spacing="3" fill="${accent}">DIGITAL BAT</text>
+  <text x="80" y="${h - 90}" font-family="Inter, Arial, sans-serif" font-size="52" font-weight="700" fill="#ffffff">${esc(title)}</text>
+</svg>`;
+}
+
+const blogCovers = [
+  ['ooh-advertising', 'Out-of-Home advertising', 'billboard', ACCENT],
+  ['whatsapp-marketing', 'WhatsApp & performance', 'chat', SKY],
+  ['ai-advertising', 'AI in advertising', 'ai', ACCENT],
+  ['dpr-bankable', 'Bankable DPRs', 'doc', SKY],
+  ['insight', 'Insights', 'default', ACCENT],
 ];
-for (const [slug, label, accent] of blog) {
-  write(`blog/${slug}.svg`, svg({ label, sub: 'Digital BAT', w: 1600, h: 900, accent }));
+for (const [slug, title, kind, accent] of blogCovers) {
+  write(`blog/${slug}.svg`, editorialSvg({ title, kind, accent }));
 }
 
 // About / founder / generic
