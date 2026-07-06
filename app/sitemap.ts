@@ -3,6 +3,7 @@ import { SITE_URL } from '@/lib/seo';
 import { divisions } from '@/content/divisions';
 import { caseStudies } from '@/content/caseStudies';
 import { posts } from '@/content/posts';
+import { aiGuides } from '@/content/aiGuides';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPaths = [
@@ -15,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/contact',
     '/careers',
     '/blog',
+    '/ai-guides',
   ];
 
   const now = new Date('2026-06-20');
@@ -47,5 +49,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...base, ...divisionPaths, ...workPaths, ...blogPaths];
+  const guidePaths = aiGuides.map((g) => ({
+    url: `${SITE_URL}/ai-guides/${g.slug}`,
+    lastModified: new Date(g.updated),
+    changeFrequency: 'monthly' as const,
+    priority: 0.6,
+  }));
+
+  return [...base, ...divisionPaths, ...workPaths, ...blogPaths, ...guidePaths];
 }

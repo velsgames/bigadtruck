@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Midjourney">
+  <defs>
+    <linearGradient id="bg696" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0a1a2b"/><stop offset="1" stop-color="#13314e"/>
+    </linearGradient>
+    <linearGradient id="ic696" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#7C3AED"/><stop offset="1" stop-color="#7C3AED" stop-opacity="0.82"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg696)"/>
+  <rect x="675" y="235" width="250" height="250" rx="58" fill="url(#ic696)" stroke="#ffffff" stroke-opacity="0.14" stroke-width="2"/>
+  <text x="800" y="360" dy="0.36em" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="150" font-weight="800" fill="#ffffff">M</text>
+  <text x="800" y="666" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="62" font-weight="700" fill="#ffffff">Midjourney</text>
+  <text x="800" y="738" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="30" fill="#93a6ba">Midjourney</text>
+</svg>

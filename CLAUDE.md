@@ -35,6 +35,12 @@ After any change, keep **typecheck + lint + build** green and run the **Playwrig
 - `app/api/contact/` — lead + newsletter endpoint (delivers via `lib/leads.ts`).
 - `app/api/chat/` — the "Truck" AI assistant endpoint (lead-capturing chatbot). Keyless by
   default (`lib/assistant.ts`); upgrades to Claude when `ANTHROPIC_API_KEY` is set. See below.
+- `app/(marketing)/blog/` — **Digital BAT**, the editorial/insights section (content in
+  `content/posts.ts`; `/rss.xml` feed; Sanity `post` schema). Auto-published to via a daily
+  Routine (scheduled trigger) that opens+merges a PR; quality-gated, anti-delisting rules.
+- `app/(marketing)/ai-guides/` — **AI Learning Guide**: bilingual (EN/हिन्दी) tool guides
+  (`content/aiGuides.ts`), branded Buzzmore × Bigadtruck, premium/techie styling (see the
+  `.tech-grid`/`.tech-glow`/`.card-glow`/terminal-prompt utilities in `styles/globals.css`).
 - `app/layout.tsx` — root: `<html>/<body>`, fonts, site metadata only.
 - `components/` — `cards/`, `layout/`, `sections/`, `ui/`. Client components carry `'use client'`.
 - `content/*.ts` — **all editable copy** (site, divisions, services, caseStudies, industries,

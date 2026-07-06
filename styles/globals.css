@@ -235,3 +235,57 @@ input:-webkit-autofill:focus {
     transition: none !important;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Techie surfaces — used by the AI Learning Guide for a premium, advanced feel.
+--------------------------------------------------------------------------- */
+.tech-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 46px 46px;
+  -webkit-mask-image: radial-gradient(120% 90% at 50% 0%, #000 40%, transparent 78%);
+  mask-image: radial-gradient(120% 90% at 50% 0%, #000 40%, transparent 78%);
+}
+.tech-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(50% 60% at 82% -5%, rgba(46, 91, 255, 0.22), transparent 70%),
+    radial-gradient(40% 50% at 8% 0%, rgba(56, 189, 248, 0.14), transparent 70%);
+}
+.text-gradient {
+  background: linear-gradient(180deg, #ffffff 0%, #aebfd6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.card-glow {
+  transition:
+    box-shadow 0.4s var(--ease-expo),
+    transform 0.4s var(--ease-expo),
+    border-color 0.4s var(--ease-expo);
+}
+@media (hover: hover) {
+  .card-glow:hover {
+    transform: translateY(-4px);
+    border-color: rgba(46, 91, 255, 0.55);
+    box-shadow:
+      0 0 0 1px rgba(46, 91, 255, 0.25),
+      0 24px 64px -24px rgba(46, 91, 255, 0.45);
+  }
+}
+/* Terminal-style prompt card chrome */
+.term-dots::before {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  background: #ff5f56;
+  box-shadow:
+    16px 0 0 #ffbd2e,
+    32px 0 0 #27c93f;
+}
