@@ -160,6 +160,51 @@ for (const [slug, title, kind, accent] of blogCovers) {
   write(`blog/${slug}.svg`, editorialSvg({ title, kind, accent }));
 }
 
+// AI Learning Guide — branded app-icon tiles per tool (approximate brand
+// colours + monogram; not the trademarked logos).
+function logoTile({ name, maker, mono, color, w = 1600, h = 900 }) {
+  const id = Math.abs(hash(name)) % 1000;
+  const cx = w * 0.5;
+  const cy = h * 0.4;
+  const s = 250;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img" aria-label="${esc(name)}">
+  <defs>
+    <linearGradient id="bg${id}" x1="0" y1="0" x2="${w}" y2="${h}" gradientUnits="userSpaceOnUse">
+      <stop stop-color="${NAVY}"/><stop offset="1" stop-color="${NAVY2}"/>
+    </linearGradient>
+    <linearGradient id="ic${id}" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="${color}"/><stop offset="1" stop-color="${color}" stop-opacity="0.82"/>
+    </linearGradient>
+  </defs>
+  <rect width="${w}" height="${h}" fill="url(#bg${id})"/>
+  <rect x="${cx - s / 2}" y="${cy - s / 2}" width="${s}" height="${s}" rx="58" fill="url(#ic${id})" stroke="#ffffff" stroke-opacity="0.14" stroke-width="2"/>
+  <text x="${cx}" y="${cy}" dy="0.36em" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="${mono.length > 1 ? 118 : 150}" font-weight="800" fill="#ffffff">${esc(mono)}</text>
+  <text x="${cx}" y="${h * 0.74}" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="62" font-weight="700" fill="#ffffff">${esc(name)}</text>
+  <text x="${cx}" y="${h * 0.82}" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="30" fill="#93a6ba">${esc(maker)}</text>
+</svg>`;
+}
+
+const aiTools = [
+  ['claude', 'Claude', 'Anthropic', 'C', '#D97757'],
+  ['chatgpt', 'ChatGPT', 'OpenAI', 'G', '#10A37F'],
+  ['gemini', 'Gemini', 'Google', 'G', '#4285F4'],
+  ['lovable', 'Lovable', 'Lovable', 'L', '#FF4D6D'],
+  ['antigravity', 'Antigravity', 'Google', 'A', '#5B8DEF'],
+  ['cursor', 'Cursor', 'Anysphere', 'Cu', '#64748B'],
+  ['perplexity', 'Perplexity', 'Perplexity AI', 'P', '#20B8CD'],
+  ['github-copilot', 'GitHub Copilot', 'GitHub', 'Co', '#6E7681'],
+  ['grok', 'Grok', 'xAI', 'X', '#4B5563'],
+  ['deepseek', 'DeepSeek', 'DeepSeek', 'D', '#4D6BFE'],
+  ['v0', 'v0', 'Vercel', 'v0', '#3F3F46'],
+  ['midjourney', 'Midjourney', 'Midjourney', 'M', '#7C3AED'],
+  ['runway', 'Runway', 'Runway', 'R', '#059669'],
+  ['suno', 'Suno', 'Suno', 'S', '#F59E0B'],
+  ['elevenlabs', 'ElevenLabs', 'ElevenLabs', '11', '#334155'],
+];
+for (const [slug, name, maker, mono, color] of aiTools) {
+  write(`ai/${slug}.svg`, logoTile({ name, maker, mono, color }));
+}
+
 // About / founder / generic
 write('about/story.svg', svg({ label: 'The Big Ad Truck', sub: 'Pune · Mumbai', w: 1400, h: 1000 }));
 write('about/founder.svg', svg({ label: 'Apoorva Vyas', sub: 'Founder & CEO', w: 1000, h: 1200, accent: SKY }));

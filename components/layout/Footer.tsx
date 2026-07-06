@@ -75,6 +75,10 @@ export function Footer() {
             <span>
               © {year} {site.legalName}
             </span>
+            <span className="hidden sm:inline">·</span>
+            <span>
+              Made by <span className="text-ink">{site.founder.fullName}</span>
+            </span>
           </div>
         </div>
       </div>

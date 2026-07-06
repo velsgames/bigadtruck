@@ -81,6 +81,7 @@ export const nav: NavItem[] = [
   { label: 'Work', href: '/work' },
   { label: 'Industries', href: '/industries' },
   { label: 'Digital BAT', href: '/blog' },
+  { label: 'AI Guide', href: '/ai-guides' },
   { label: 'About', href: '/about' },
 ];
 
@@ -101,6 +102,7 @@ export const footerNav = [
       { label: 'Divisions', href: '/divisions' },
       { label: 'Work', href: '/work' },
       { label: 'Digital BAT', href: '/blog' },
+      { label: 'AI Learning Guide', href: '/ai-guides' },
       { label: 'Industries', href: '/industries' },
       { label: 'Careers', href: '/careers' },
       { label: 'Contact', href: '/contact' },
