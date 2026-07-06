@@ -12,7 +12,7 @@ import { MapPin } from 'lucide-react';
 export const metadata: Metadata = pageMeta({
   title: 'About',
   description:
-    'The story behind Bigadtruck Group — a 360° advertising, marketing and technology agency built to carry a full load of ideas to every destination. Founded by V. Vyas, based in Pune & Mumbai.',
+    'The story behind Bigadtruck Group — a 360° advertising, marketing and technology agency built to carry a full load of ideas to every destination. Founded by Apoorva Vyas, based in Pune & Mumbai.',
   path: '/about',
 });
 

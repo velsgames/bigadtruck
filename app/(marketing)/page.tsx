@@ -8,6 +8,7 @@ import { ServicesOverview } from '@/components/sections/ServicesOverview';
 import { Stats } from '@/components/sections/Stats';
 import { ProcessStepper } from '@/components/sections/ProcessStepper';
 import { Testimonials } from '@/components/sections/Testimonials';
+import { FounderNote } from '@/components/sections/FounderNote';
 import { CTASection } from '@/components/sections/CTASection';
 import { getDivisions, getFeaturedCaseStudies, getServices, getTestimonials } from '@/lib/cms';
 
@@ -40,6 +41,7 @@ export default async function HomePage() {
       <Stats />
       <ProcessStepper />
       <Testimonials testimonials={testimonials} />
+      <FounderNote />
       <CTASection />
     </>
   );
