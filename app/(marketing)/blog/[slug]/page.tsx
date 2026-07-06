@@ -72,6 +72,20 @@ export default async function ArticlePage({ params }: { params: { slug: string }
         {/* Body */}
         <div className="container py-16 lg:py-20">
           <div className="mx-auto max-w-2xl space-y-6">
+            {post.summary && post.summary.length > 0 && (
+              <div className="rounded-2xl border border-line bg-surface p-6">
+                <div className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">The short version</div>
+                <ul className="mt-4 space-y-2.5">
+                  {post.summary.map((s, i) => (
+                    <li key={i} className="flex gap-3 text-pretty text-muted">
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
+                      {s}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             {post.body.map((block, i) => (
               <Block key={i} block={block} />
             ))}
@@ -134,6 +148,31 @@ function Block({ block }: { block: PostBlock }) {
           “{block.text}”
           {block.cite && <cite className="mt-2 block text-sm font-normal not-italic text-muted">— {block.cite}</cite>}
         </blockquote>
+      );
+    case 'stats':
+      return (
+        <figure className="my-4 rounded-2xl border border-line bg-surface p-6 lg:p-8">
+          {block.caption && (
+            <figcaption className="mb-6 text-xs font-semibold uppercase tracking-[0.18em] text-muted">
+              {block.caption}
+            </figcaption>
+          )}
+          <dl className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+            {block.items.map((s, i) => (
+              <div key={i}>
+                <dt className="font-display text-3xl font-bold leading-none text-accent lg:text-4xl">{s.value}</dt>
+                <dd className="mt-2 text-sm text-muted">{s.label}</dd>
+              </div>
+            ))}
+          </dl>
+        </figure>
+      );
+    case 'callout':
+      return (
+        <aside className="my-4 rounded-2xl border border-accent/30 bg-accent-soft p-6">
+          {block.title && <div className="font-display text-sm font-semibold uppercase tracking-wide text-accent">{block.title}</div>}
+          <p className="mt-2 text-pretty text-lg font-medium text-ink">{block.text}</p>
+        </aside>
       );
     default:
       return <p className="text-pretty text-lg leading-relaxed text-ink/90">{block.text}</p>;

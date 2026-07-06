@@ -9,8 +9,9 @@ import { Stats } from '@/components/sections/Stats';
 import { ProcessStepper } from '@/components/sections/ProcessStepper';
 import { Testimonials } from '@/components/sections/Testimonials';
 import { FounderNote } from '@/components/sections/FounderNote';
+import { InsightsHome } from '@/components/sections/InsightsHome';
 import { CTASection } from '@/components/sections/CTASection';
-import { getDivisions, getFeaturedCaseStudies, getServices, getTestimonials } from '@/lib/cms';
+import { getDivisions, getFeaturedCaseStudies, getServices, getTestimonials, getPosts } from '@/lib/cms';
 
 export const metadata: Metadata = {
   ...pageMeta({
@@ -24,11 +25,12 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const [divisions, featured, services, testimonials] = await Promise.all([
+  const [divisions, featured, services, testimonials, posts] = await Promise.all([
     getDivisions(),
     getFeaturedCaseStudies(),
     getServices(),
     getTestimonials(),
+    getPosts(),
   ]);
 
   return (
@@ -41,6 +43,7 @@ export default async function HomePage() {
       <Stats />
       <ProcessStepper />
       <Testimonials testimonials={testimonials} />
+      <InsightsHome posts={posts} />
       <FounderNote />
       <CTASection />
     </>

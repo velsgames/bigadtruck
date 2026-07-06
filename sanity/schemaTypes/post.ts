@@ -29,6 +29,12 @@ export const post = defineType({
     defineField({ name: 'cover', type: 'image', options: { hotspot: true } }),
     defineField({ name: 'tags', type: 'array', of: [{ type: 'string' }], options: { layout: 'tags' } }),
     defineField({
+      name: 'summary',
+      title: 'Key takeaways (the short version)',
+      type: 'array',
+      of: [{ type: 'string' }],
+    }),
+    defineField({
       name: 'body',
       title: 'Body',
       type: 'array',
