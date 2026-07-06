@@ -5,7 +5,8 @@ import type { Metadata } from 'next';
 import { ArrowRight, Check } from 'lucide-react';
 import { divisions as seedDivisions } from '@/content/divisions';
 import { getDivision, getDivisions } from '@/lib/cms';
-import { pageMeta, serviceJsonLd } from '@/lib/seo';
+import { pageMeta, serviceJsonLd, breadcrumbJsonLd } from '@/lib/seo';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { PageHero } from '@/components/sections/PageHero';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { ScrollReveal, ScrollRevealGroup, ScrollRevealItem } from '@/components/ui/ScrollReveal';
@@ -35,13 +36,15 @@ export default async function DivisionDetailPage({ params }: { params: { slug: s
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
-            serviceJsonLd(division.name, division.summary, `/divisions/${division.slug}`),
-          ),
-        }}
+      <JsonLd
+        data={[
+          serviceJsonLd(division.name, division.summary, `/divisions/${division.slug}`),
+          breadcrumbJsonLd([
+            { name: 'Home', path: '/' },
+            { name: 'Divisions', path: '/divisions' },
+            { name: division.name, path: `/divisions/${division.slug}` },
+          ]),
+        ]}
       />
 
       <PageHero eyebrow={division.kicker} title={division.tagline} intro={division.intro}>

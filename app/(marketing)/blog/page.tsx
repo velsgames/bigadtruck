@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { pageMeta } from '@/lib/seo';
+import { pageMeta, breadcrumbJsonLd } from '@/lib/seo';
 import { blog } from '@/content/site';
 import { getPosts } from '@/lib/cms';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { PostCard } from '@/components/cards/PostCard';
 import { BlogFeed } from '@/components/sections/BlogFeed';
@@ -20,6 +21,12 @@ export default async function BlogIndexPage() {
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: 'Home', path: '/' },
+          { name: blog.name, path: '/blog' },
+        ])}
+      />
       {/* Masthead */}
       <header className="border-b border-line">
         <div className="container pb-12 pt-32 lg:pt-40">

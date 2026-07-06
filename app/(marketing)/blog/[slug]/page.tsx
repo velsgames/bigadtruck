@@ -5,9 +5,10 @@ import type { Metadata } from 'next';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { posts as seedPosts, type PostBlock } from '@/content/posts';
 import { getPost, getPosts } from '@/lib/cms';
-import { pageMeta, articleJsonLd } from '@/lib/seo';
+import { pageMeta, articleJsonLd, breadcrumbJsonLd } from '@/lib/seo';
 import { blog } from '@/content/site';
 import { PostCard } from '@/components/cards/PostCard';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { CTASection } from '@/components/sections/CTASection';
 import { formatDate } from '@/lib/utils';
 
@@ -42,7 +43,16 @@ export default async function ArticlePage({ params }: { params: { slug: string }
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <JsonLd
+        data={[
+          jsonLd,
+          breadcrumbJsonLd([
+            { name: 'Home', path: '/' },
+            { name: blog.name, path: '/blog' },
+            { name: post.title, path: `/blog/${post.slug}` },
+          ]),
+        ]}
+      />
 
       <article>
         <header className="border-b border-line">

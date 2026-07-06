@@ -3,11 +3,12 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { ArrowRight } from 'lucide-react';
 import { aiGuides } from '@/content/aiGuides';
-import { pageMeta, SITE_URL } from '@/lib/seo';
+import { pageMeta, SITE_URL, breadcrumbJsonLd } from '@/lib/seo';
 import { site } from '@/content/site';
 import { GuideArticle } from '@/components/sections/GuideArticle';
 import { GuideCard } from '@/components/cards/GuideCard';
 import { CTASection } from '@/components/sections/CTASection';
+import { JsonLd } from '@/components/seo/JsonLd';
 
 export function generateStaticParams() {
   return aiGuides.map((g) => ({ slug: g.slug }));
@@ -51,7 +52,16 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <JsonLd
+        data={[
+          jsonLd,
+          breadcrumbJsonLd([
+            { name: 'Home', path: '/' },
+            { name: 'AI Learning Guide', path: '/ai-guides' },
+            { name: guide.name, path: `/ai-guides/${guide.slug}` },
+          ]),
+        ]}
+      />
 
       <GuideArticle guide={guide} />
 
