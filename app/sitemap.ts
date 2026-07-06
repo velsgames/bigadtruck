@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 import { SITE_URL } from '@/lib/seo';
 import { divisions } from '@/content/divisions';
 import { caseStudies } from '@/content/caseStudies';
+import { posts } from '@/content/posts';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPaths = [
@@ -13,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/industries',
     '/contact',
     '/careers',
+    '/blog',
   ];
 
   const now = new Date('2026-06-20');
@@ -38,5 +40,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...base, ...divisionPaths, ...workPaths];
+  const blogPaths = posts.map((p) => ({
+    url: `${SITE_URL}/blog/${p.slug}`,
+    lastModified: new Date(p.date),
+    changeFrequency: 'monthly' as const,
+    priority: 0.6,
+  }));
+
+  return [...base, ...divisionPaths, ...workPaths, ...blogPaths];
 }

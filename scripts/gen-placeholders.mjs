@@ -89,6 +89,18 @@ for (const [slug, label, accent] of work) {
   write(`work/gallery-${g}.svg`, svg({ label: `Gallery ${g.toUpperCase()}`, w: 1200, h: 900, accent: i % 2 ? SKY : ACCENT })),
 );
 
+// Digital BAT — blog / insights covers
+const blog = [
+  ['ooh-advertising', 'Out-of-Home', ACCENT],
+  ['whatsapp-marketing', 'WhatsApp Marketing', SKY],
+  ['ai-advertising', 'AI & Advertising', ACCENT],
+  ['dpr-bankable', 'Bankable DPRs', SKY],
+  ['insight', 'Digital BAT', ACCENT],
+];
+for (const [slug, label, accent] of blog) {
+  write(`blog/${slug}.svg`, svg({ label, sub: 'Digital BAT', w: 1600, h: 900, accent }));
+}
+
 // About / founder / generic
 write('about/story.svg', svg({ label: 'The Big Ad Truck', sub: 'Pune · Mumbai', w: 1400, h: 1000 }));
 write('about/founder.svg', svg({ label: 'Apoorva Vyas', sub: 'Founder & CEO', w: 1000, h: 1200, accent: SKY }));
