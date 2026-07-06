@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { ArrowRight } from 'lucide-react';
 import { aiGuides } from '@/content/aiGuides';
+import { scenarios as allScenarios } from '@/content/aiScenarios';
 import { pageMeta, SITE_URL, breadcrumbJsonLd } from '@/lib/seo';
 import { site } from '@/content/site';
 import { GuideArticle } from '@/components/sections/GuideArticle';
@@ -29,6 +30,7 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
   const guide = aiGuides.find((g) => g.slug === params.slug);
   if (!guide) notFound();
 
+  const guideScenarios = allScenarios.filter((s) => s.tool === guide.slug);
   const related = aiGuides
     .filter((g) => g.slug !== guide.slug && g.category === guide.category)
     .slice(0, 3);
@@ -63,7 +65,7 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
         ]}
       />
 
-      <GuideArticle guide={guide} />
+      <GuideArticle guide={guide} scenarios={guideScenarios} />
 
       {more.length > 0 && (
         <section className="border-t border-line">

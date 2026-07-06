@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowLeft, Check, Copy } from 'lucide-react';
+import { ArrowLeft, Check, Copy, User } from 'lucide-react';
 import type { AiGuide, Bi } from '@/content/aiGuides';
+import type { Scenario } from '@/content/aiScenarios';
 import { cn, formatDate } from '@/lib/utils';
 
 type Lang = 'en' | 'hi';
@@ -19,6 +20,8 @@ const L = {
   back: { en: 'AI Learning Guide', hi: 'AI लर्निंग गाइड' },
   copy: { en: 'Copy', hi: 'कॉपी' },
   copied: { en: 'Copied', hi: 'कॉपी हुआ' },
+  inAction: { en: 'See it in action', hi: 'इसे काम करते देखें' },
+  theResult: { en: 'Result', hi: 'नतीजा' },
 } as const;
 
 function CopyButton({ text, lang }: { text: string; lang: Lang }) {
@@ -56,7 +59,7 @@ function Bullets({ items, lang }: { items: Bi[]; lang: Lang }) {
   );
 }
 
-export function GuideArticle({ guide }: { guide: AiGuide }) {
+export function GuideArticle({ guide, scenarios = [] }: { guide: AiGuide; scenarios?: Scenario[] }) {
   const [lang, setLang] = useState<Lang>('en');
 
   return (
@@ -116,6 +119,46 @@ export function GuideArticle({ guide }: { guide: AiGuide }) {
           <Section title={L.bestPractices[lang]}>
             <Bullets items={guide.bestPractices} lang={lang} />
           </Section>
+
+          {scenarios.length > 0 && (
+            <Section title={L.inAction[lang]}>
+              <div className="mt-5 space-y-5">
+                {scenarios.map((sc, i) => (
+                  <div key={i} className="overflow-hidden rounded-2xl border border-line bg-surface/40">
+                    <div className="flex items-center gap-3 border-b border-line px-5 py-3">
+                      <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-accent/15 text-accent">
+                        <User className="h-4 w-4" />
+                      </span>
+                      <div className="text-sm">
+                        <span className="font-semibold text-ink">{sc.persona}</span>
+                        <span className="text-muted"> · {sc.role[lang]}</span>
+                      </div>
+                    </div>
+                    <div className="space-y-3 px-5 py-4">
+                      <p className="text-pretty text-muted">{sc.situation[lang]}</p>
+                      <div className="overflow-hidden rounded-xl border border-line bg-navy">
+                        <div className="flex items-center justify-between gap-3 border-b border-line bg-surface/60 px-4 py-2">
+                          <span className="term-dots relative block h-2.5 w-2.5" aria-hidden />
+                          <span className="ml-auto font-mono text-[11px] uppercase tracking-widest text-muted">prompt</span>
+                          <CopyButton text={sc.prompt} lang={lang} />
+                        </div>
+                        <code className="block whitespace-pre-wrap px-4 py-3 font-mono text-sm leading-relaxed text-ink">
+                          {sc.prompt}
+                        </code>
+                      </div>
+                      <p className="flex gap-2 text-pretty text-ink/90">
+                        <Check className="mt-1 h-4 w-4 shrink-0 text-accent" />
+                        <span>
+                          <span className="font-semibold text-accent">{L.theResult[lang]}: </span>
+                          {sc.outcome[lang]}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Section>
+          )}
 
           <Section title={L.examples[lang]}>
             <div className="mt-5 space-y-4">
