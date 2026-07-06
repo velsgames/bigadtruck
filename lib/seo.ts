@@ -45,9 +45,15 @@ export function organizationJsonLd() {
     legalName: site.legalName,
     url: SITE_URL,
     email: contact.email,
+    telephone: contact.phoneDisplay,
     slogan: site.tagline,
     foundingDate: String(site.foundedYear),
     description: site.description,
+    logo: {
+      '@type': 'ImageObject',
+      url: `${SITE_URL}/brand/logo.png`,
+    },
+    image: `${SITE_URL}/opengraph-image`,
     sameAs: [
       'https://instagram.com/bigadtruck',
       'https://linkedin.com/company/bigadtruck',
@@ -60,6 +66,47 @@ export function organizationJsonLd() {
       addressCountry: 'IN',
     })),
     founder: { '@type': 'Person', name: site.founder.fullName, jobTitle: site.founder.role },
+  };
+}
+
+/** WebSite JSON-LD — helps Google understand the site name/entity. */
+export function websiteJsonLd() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${SITE_URL}/#website`,
+    name: site.name,
+    url: SITE_URL,
+    description: site.description,
+    inLanguage: 'en-IN',
+    publisher: { '@id': `${SITE_URL}/#organization` },
+  };
+}
+
+/** BreadcrumbList JSON-LD from an ordered list of { name, path } crumbs. */
+export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((it, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: it.name,
+      item: new URL(it.path, SITE_URL).toString(),
+    })),
+  };
+}
+
+/** FAQPage JSON-LD from question/answer pairs. */
+export function faqJsonLd(items: { question: string; answer: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map((it) => ({
+      '@type': 'Question',
+      name: it.question,
+      acceptedAnswer: { '@type': 'Answer', text: it.answer },
+    })),
   };
 }
 

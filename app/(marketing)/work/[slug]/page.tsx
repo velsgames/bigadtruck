@@ -5,7 +5,8 @@ import type { Metadata } from 'next';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { caseStudies as seedCaseStudies } from '@/content/caseStudies';
 import { getCaseStudy, getCaseStudies } from '@/lib/cms';
-import { pageMeta } from '@/lib/seo';
+import { pageMeta, breadcrumbJsonLd } from '@/lib/seo';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { StatCounter } from '@/components/ui/StatCounter';
@@ -35,6 +36,13 @@ export default async function CaseStudyPage({ params }: { params: { slug: string
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: 'Home', path: '/' },
+          { name: 'Work', path: '/work' },
+          { name: study.title, path: `/work/${study.slug}` },
+        ])}
+      />
       <article>
         {/* Hero */}
         <header className="border-b border-line">

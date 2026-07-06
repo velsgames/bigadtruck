@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { pageMeta } from '@/lib/seo';
+import { pageMeta, faqJsonLd, breadcrumbJsonLd } from '@/lib/seo';
 import { getServices } from '@/lib/cms';
 import { PageHero } from '@/components/sections/PageHero';
 import { ServiceCard } from '@/components/cards/ServiceCard';
@@ -7,6 +7,7 @@ import { ScrollRevealGroup, ScrollRevealItem } from '@/components/ui/ScrollRevea
 import { CTASection } from '@/components/sections/CTASection';
 import { FAQAccordion } from '@/components/ui/FAQAccordion';
 import { SectionHeading } from '@/components/ui/SectionHeading';
+import { JsonLd } from '@/components/seo/JsonLd';
 
 export const metadata: Metadata = pageMeta({
   title: 'Services',
@@ -72,6 +73,15 @@ export default async function ServicesPage() {
   const services = await getServices();
   return (
     <>
+      <JsonLd
+        data={[
+          faqJsonLd(faqs),
+          breadcrumbJsonLd([
+            { name: 'Home', path: '/' },
+            { name: 'Services', path: '/services' },
+          ]),
+        ]}
+      />
       <PageHero
         eyebrow="Capabilities"
         title="A full load of services — strategy to delivery."

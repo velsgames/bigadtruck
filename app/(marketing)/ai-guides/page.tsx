@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
 import { Sparkles } from 'lucide-react';
-import { pageMeta } from '@/lib/seo';
+import { pageMeta, breadcrumbJsonLd } from '@/lib/seo';
 import { site } from '@/content/site';
 import { aiGuides } from '@/content/aiGuides';
 import { GuideFilter } from '@/components/sections/GuideFilter';
 import { CTASection } from '@/components/sections/CTASection';
+import { JsonLd } from '@/components/seo/JsonLd';
 
 export const metadata: Metadata = pageMeta({
   title: 'AI Learning Guide — Claude, ChatGPT & more, in English & हिन्दी',
@@ -16,6 +17,12 @@ export const metadata: Metadata = pageMeta({
 export default function AiGuidesPage() {
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: 'Home', path: '/' },
+          { name: 'AI Learning Guide', path: '/ai-guides' },
+        ])}
+      />
       <header className="tech-glow relative overflow-hidden border-b border-line">
         <div className="tech-grid pointer-events-none absolute inset-0" aria-hidden />
         <div className="container relative pb-14 pt-32 lg:pt-40">

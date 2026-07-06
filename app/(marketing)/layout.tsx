@@ -1,4 +1,4 @@
-import { organizationJsonLd, localBusinessJsonLd } from '@/lib/seo';
+import { organizationJsonLd, localBusinessJsonLd, websiteJsonLd } from '@/lib/seo';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { SmoothScroll } from '@/components/layout/SmoothScroll';
@@ -19,6 +19,10 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd()) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd()) }}
       />
       <script
         type="application/ld+json"
