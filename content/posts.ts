@@ -5,13 +5,21 @@
  *
  * These are the typed seed articles; when Sanity is configured they can be
  * edited at /studio (see the `post` schema). Edit copy here, not the components.
+ *
+ * Rich article elements:
+ *  - `summary`   — a "short version" / key-takeaways box shown near the top.
+ *  - body `stats`  — an infographic row of figures (framework/directional — not
+ *                    fabricated research; keep numbers honest).
+ *  - body `callout`— a highlighted "bottom line" note.
  */
 
 export type PostBlock =
   | { type: 'p'; text: string }
   | { type: 'h2'; text: string }
   | { type: 'ul'; items: string[] }
-  | { type: 'quote'; text: string; cite?: string };
+  | { type: 'quote'; text: string; cite?: string }
+  | { type: 'stats'; caption?: string; items: { value: string; label: string }[] }
+  | { type: 'callout'; title?: string; text: string };
 
 export type Post = {
   slug: string;
@@ -23,6 +31,8 @@ export type Post = {
   author: string;
   cover: string;
   tags: string[];
+  /** Key takeaways shown as a "short version" box near the top. */
+  summary?: string[];
   body: PostBlock[];
   featured?: boolean;
 };
@@ -49,10 +59,25 @@ export const posts: Post[] = [
     cover: '/images/blog/ooh-advertising.svg',
     tags: ['OOH', 'Media planning', 'Pune', 'Mumbai'],
     featured: true,
+    summary: [
+      'OOH is unskippable reach — the opposite of scroll-past digital.',
+      'Pune & Mumbai’s long, predictable commutes are built for repeat exposure.',
+      'Modern OOH is measurable: route modelling, QR/vanity URLs, geo-retargeting and footfall lift.',
+      'Brief the route first, keep one idea and one action, and wire a response channel.',
+    ],
     body: [
       {
         type: 'p',
         text: 'Digital advertising promised perfect targeting. What it also delivered was an arms race for attention that most brands are quietly losing — ad blockers, scroll-past reflexes, and a cost-per-thousand that climbs every quarter. Out-of-home (OOH) sits outside that fight. You cannot skip a hoarding on FC Road, mute a wrapped bus in Andheri, or close the tab on a mobile ad truck parked outside a launch venue.',
+      },
+      {
+        type: 'stats',
+        caption: 'The OOH plan at a glance',
+        items: [
+          { value: '2', label: 'Core markets — Pune & Mumbai' },
+          { value: '3', label: 'Format layers: fixed, transit, mobile' },
+          { value: '1', label: 'Measurement layer, wired to digital' },
+        ],
       },
       { type: 'h2', text: 'Unskippable reach in the two markets that matter' },
       {
@@ -79,7 +104,12 @@ export const posts: Post[] = [
       { type: 'h2', text: 'How to brief it well' },
       {
         type: 'p',
-        text: 'Start with the route, not the artwork. Decide where your audience physically is, then design for the format and the distance. Keep the message to one idea and one action. Pair every site with a way to respond — a short URL, a WhatsApp number, a QR code — so the campaign has a measurable other end. Do that, and out-of-home stops being a brand-vanity line item and starts being one of the most efficient reach buys on the plan.',
+        text: 'Start with the route, not the artwork. Decide where your audience physically is, then design for the format and the distance. Keep the message to one idea and one action. Pair every site with a way to respond — a short URL, a WhatsApp number, a QR code — so the campaign has a measurable other end.',
+      },
+      {
+        type: 'callout',
+        title: 'The bottom line',
+        text: 'Do that, and out-of-home stops being a brand-vanity line item and becomes one of the most efficient reach buys on the plan.',
       },
     ],
   },
@@ -87,7 +117,7 @@ export const posts: Post[] = [
     slug: 'whatsapp-performance-marketing-india-2026',
     title: 'The 2026 playbook for WhatsApp and performance marketing in India',
     excerpt:
-      'With over half a billion users in India, WhatsApp is where intent turns into conversation. A practical framework for turning clicks into qualified leads — without burning the trust of the channel.',
+      'With hundreds of millions of users in India, WhatsApp is where intent turns into conversation. A practical framework for turning clicks into qualified leads — without burning the trust of the channel.',
     category: 'Digital',
     date: '2026-06-15',
     readMins: 7,
@@ -95,10 +125,25 @@ export const posts: Post[] = [
     cover: '/images/blog/whatsapp-marketing.svg',
     tags: ['WhatsApp', 'Lead generation', 'Performance marketing'],
     featured: true,
+    summary: [
+      'For most Indian audiences, WhatsApp is the default way to talk to a business.',
+      'Click-to-WhatsApp removes the two biggest funnel leaks: the landing page and the form.',
+      'Design the conversation — qualify fast, route instantly, follow up on-channel, respect consent.',
+      'Measure cost-per-qualified-lead and cost-per-booking, not cost-per-click.',
+    ],
     body: [
       {
         type: 'p',
         text: 'For most Indian audiences, WhatsApp is not an app — it is the default way to talk to a business. That makes it the highest-intent channel most brands still underuse. The winning move in 2026 is not more ad spend; it is connecting the ad to a conversation the moment interest is highest.',
+      },
+      {
+        type: 'stats',
+        caption: 'Why click-to-WhatsApp converts',
+        items: [
+          { value: '0', label: 'Landing pages or forms needed' },
+          { value: '3', label: 'Messages to qualify a lead' },
+          { value: '1', label: 'Trusted channel your buyer already checks' },
+        ],
       },
       { type: 'h2', text: 'Click-to-WhatsApp is the shortest path to a lead' },
       {
@@ -125,6 +170,11 @@ export const posts: Post[] = [
         type: 'p',
         text: 'Cost-per-click is a vanity metric on this channel. Track cost-per-qualified-lead and cost-per-booking instead, tie every conversation back to the campaign that started it, and feed those signals back into targeting. That feedback loop — ad to conversation to outcome and back — is what separates a WhatsApp campaign that scales from one that just spends.',
       },
+      {
+        type: 'callout',
+        title: 'The bottom line',
+        text: 'Treat the chat as the funnel, not the click. The brands that design the conversation win the channel.',
+      },
     ],
   },
   {
@@ -138,10 +188,24 @@ export const posts: Post[] = [
     author: 'Bigadtruck Editorial',
     cover: '/images/blog/ai-advertising.svg',
     tags: ['AI', 'Creative', 'Programmatic', 'MarTech'],
+    summary: [
+      'AI creates leverage on the mechanical work — variation, optimisation, production speed, insight at scale.',
+      'It is a brilliant intern and a poor strategist: taste, culture and “what not to make” stay human.',
+      'The winning setup is machines for scale, experienced people at the two ends.',
+    ],
     body: [
       {
         type: 'p',
         text: 'The loudest question in every marketing meeting right now is some version of “can AI do this?”. Increasingly, the answer is yes — for the mechanical parts. The more useful question is where AI creates leverage and where it quietly destroys value.',
+      },
+      {
+        type: 'stats',
+        caption: 'Where the line sits',
+        items: [
+          { value: 'Dozens', label: 'Creative variants to test, not one' },
+          { value: 'Minutes', label: 'Brief to first-draft assets' },
+          { value: '2', label: 'Human ends: strategy + the final call' },
+        ],
       },
       { type: 'h2', text: 'Where AI is already earning its keep' },
       {
@@ -180,10 +244,24 @@ export const posts: Post[] = [
     author: 'Bigadtruck Editorial',
     cover: '/images/blog/dpr-bankable.svg',
     tags: ['DPR', 'Infrastructure', 'Project finance'],
+    summary: [
+      'A bankable DPR gets read, trusted and approved — a weak one stalls for months.',
+      'Reviewers check realistic demand, costing that holds, stress-tested cash flow, named risk and mapped compliance.',
+      'Rigour is speed: a strong report shortens approvals and strengthens your position.',
+    ],
     body: [
       {
         type: 'p',
         text: 'A Detailed Project Report (DPR) is the document that turns an idea into a fundable project. A weak one stalls in review for months; a bankable one gets read, trusted and approved. The difference is rarely the ambition of the project — it is the rigour of the report.',
+      },
+      {
+        type: 'stats',
+        caption: 'What a bankable DPR proves',
+        items: [
+          { value: '5', label: 'Checks reviewers actually run' },
+          { value: '1', label: 'Model that survives a bad quarter' },
+          { value: 'Faster', label: 'Approval cycle when it holds up' },
+        ],
       },
       { type: 'h2', text: 'What reviewers actually check' },
       {
