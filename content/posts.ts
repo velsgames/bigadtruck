@@ -19,7 +19,8 @@ export type PostBlock =
   | { type: 'ul'; items: string[] }
   | { type: 'quote'; text: string; cite?: string }
   | { type: 'stats'; caption?: string; items: { value: string; label: string }[] }
-  | { type: 'callout'; title?: string; text: string };
+  | { type: 'callout'; title?: string; text: string }
+  | { type: 'table'; caption?: string; headers: string[]; rows: string[][] };
 
 export type Post = {
   slug: string;
@@ -331,13 +332,49 @@ export const posts: Post[] = [
         ],
       },
       {
+        type: 'table',
+        caption: 'Translated vs built-in-language — what changes',
+        headers: ['Dimension', 'English-first, then translated', 'Vernacular-first (native)'],
+        rows: [
+          ['The idea', 'One idea, reworded per market', 'The best idea for each market'],
+          ['Tone', 'Often stiff or literal', 'Natural, colloquial, shareable'],
+          ['Cultural references', 'Usually lost', 'Built in from the start'],
+          ['Media cost', 'Premium English/Hindi inventory', 'Often lower, less contested'],
+          ['Creator fit', 'National faces', 'Trusted regional voices'],
+          ['Typical outcome', 'Reaches, rarely resonates', 'Higher recall and organic reach'],
+        ],
+      },
+      {
         type: 'quote',
         text: 'You do not win a market by shouting your message louder in a language it does not think in. You win by speaking first, in the language it dreams in.',
+      },
+      { type: 'h2', text: 'A simple prioritisation model' },
+      {
+        type: 'p',
+        text: 'You cannot do every language at once, and you should not try. Rank your target languages on three questions: where is demand already showing up, where is the media cost most favourable, and where do you have — or can find — credible creators to make native work. The language that scores well on all three is where you start. This keeps the first move small, measurable and defensible to a finance team that wants proof before scale.',
+      },
+      {
+        type: 'ul',
+        items: [
+          'Demand signal: existing sales, search interest, or enquiries from that language region.',
+          'Media efficiency: comparative CPMs and competition on regional inventory.',
+          'Creative supply: creators and writers who can build native — not translated — work.',
+        ],
+      },
+      { type: 'h2', text: 'The mistakes that quietly waste the budget' },
+      {
+        type: 'ul',
+        items: [
+          'Machine-translating a national script and calling it localisation.',
+          'Using the same national celebrity everywhere and losing regional trust.',
+          'Running regional creative with no regional response channel to capture the demand.',
+          'Judging a new-language test on week-one numbers instead of giving it a fair run.',
+        ],
       },
       { type: 'h2', text: 'How to start without boiling the ocean' },
       {
         type: 'p',
-        text: 'Pick one high-value language where you already have demand, and build genuinely native creative for it — not a translation, an original. Measure it against your English/Hindi control. When it wins, you have both the confidence and the template to scale to the next language. Do that a few times and regional stops being a checkbox and becomes your cheapest source of growth.',
+        text: 'Pick one high-value language where you already have demand, and build genuinely native creative for it — not a translation, an original. Measure it against your English/Hindi control on the metrics that matter: engaged reach, cost per qualified lead, and recall. When it wins, you have both the confidence and the template to scale to the next language. Do that a few times and regional stops being a checkbox and becomes your cheapest, most durable source of growth.',
       },
       {
         type: 'callout',
@@ -392,8 +429,36 @@ export const posts: Post[] = [
         ],
       },
       {
+        type: 'table',
+        caption: 'Celebrity vs micro-creator — how to think about the trade',
+        headers: ['Factor', 'Celebrity', 'Micro-creator network'],
+        rows: [
+          ['Primary value', 'Reach & instant credibility', 'Trust & niche fit'],
+          ['Audience', 'Massive, broad, often passive', 'Smaller, specific, highly engaged'],
+          ['Cost model', 'High flat fee', 'Lower fees, many creators'],
+          ['Risk', 'Single point of failure', 'Spread across many'],
+          ['Best for', 'National awareness spike', 'Durable belief, considered buys'],
+          ['Content', 'One polished asset', 'Many native, varied takes'],
+        ],
+      },
+      {
         type: 'quote',
         text: 'A celebrity makes people aware of you. The right micro-creator makes their community believe you. Awareness is rented; belief compounds.',
+      },
+      { type: 'h2', text: 'How to vet a creator in five minutes' },
+      {
+        type: 'p',
+        text: 'Before you sign anyone, look past the follower number and read the signals that actually predict performance. A quick, disciplined check saves most of the money brands waste on the wrong creators.',
+      },
+      {
+        type: 'ul',
+        items: [
+          'Comments quality: real questions and conversation, not a wall of emojis or bot replies.',
+          'Audience fit: are their followers your buyers, in your cities, in your language?',
+          'Consistency: do they post regularly, or only when paid?',
+          'Past brand work: did it feel native to their voice, or like a pasted-in ad?',
+          'Save/share behaviour: content people save and share beats content they scroll past.',
+        ],
       },
       { type: 'h2', text: 'So which one?' },
       {
@@ -467,6 +532,31 @@ export const posts: Post[] = [
       {
         type: 'p',
         text: 'As tracking tightens, the brands that thrive are the ones that own their relationship with the customer — first-party data, consented channels like WhatsApp, and content people choose to engage with. Borrowed audiences are getting harder to reach; owned ones compound.',
+      },
+      {
+        type: 'table',
+        caption: 'The five shifts — what each means and what to do',
+        headers: ['Shift', 'What it means', 'What to do now'],
+        rows: [
+          ['AI in the pipeline', 'Everyday creative & media plumbing', 'Automate the grind, keep humans on strategy'],
+          ['Retail media', 'Ad space next to the buy button', 'Make it a core, measured line item'],
+          ['Connected TV', 'Big-screen story + digital targeting', 'Tell brand stories you can still track'],
+          ['Vernacular-first', 'Growth in regional languages', 'Build native creative, not translations'],
+          ['Privacy reset', 'Tracking tightens', 'Own first-party data & consented channels'],
+        ],
+      },
+      { type: 'h2', text: 'How to sequence them (don’t do all five at once)' },
+      {
+        type: 'p',
+        text: 'Trying to act on every shift in one quarter is how budgets get thin and nothing gets proven. Sequence instead. Start with the two that touch your current weakest link — usually measurement (first-party data) and efficiency (AI in the workflow). Layer retail media where you already sell, add connected TV when you have a brand story worth the screen, and build vernacular capability as an ongoing muscle rather than a one-off test.',
+      },
+      {
+        type: 'ul',
+        items: [
+          'Quarter 1: fix measurement (first-party data) and put AI into the creative/media workflow.',
+          'Quarter 2: turn on retail media where intent is highest and add native regional creative.',
+          'Quarter 3: bring in connected TV for accountable brand storytelling.',
+        ],
       },
       {
         type: 'quote',

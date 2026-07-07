@@ -184,6 +184,40 @@ function Block({ block }: { block: PostBlock }) {
           <p className="mt-2 text-pretty text-lg font-medium text-ink">{block.text}</p>
         </aside>
       );
+    case 'table':
+      return (
+        <figure className="my-4">
+          {block.caption && (
+            <figcaption className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-muted">
+              {block.caption}
+            </figcaption>
+          )}
+          <div className="overflow-x-auto rounded-2xl border border-line">
+            <table className="w-full border-collapse text-left text-sm">
+              <thead>
+                <tr className="bg-surface">
+                  {block.headers.map((h, i) => (
+                    <th key={i} className="border-b border-line px-4 py-3 font-semibold text-ink">
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {block.rows.map((row, r) => (
+                  <tr key={r} className="odd:bg-surface/30">
+                    {row.map((cell, c) => (
+                      <td key={c} className={c === 0 ? 'px-4 py-3 font-medium text-ink' : 'px-4 py-3 text-muted'}>
+                        {cell}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </figure>
+      );
     default:
       return <p className="text-pretty text-lg leading-relaxed text-ink/90">{block.text}</p>;
   }
