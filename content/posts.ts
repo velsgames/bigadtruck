@@ -285,4 +285,126 @@ export const posts: Post[] = [
       },
     ],
   },
+  {
+    slug: 'regional-language-advertising-india',
+    title: 'Regional-language creative is India’s most underused growth lever',
+    excerpt:
+      'Most brands still run English-first creative and translate as an afterthought. In a country that thinks in a dozen languages, that leaves the biggest audiences — and the best CPMs — on the table.',
+    category: 'Advertising',
+    date: '2026-07-07',
+    readMins: 6,
+    author: 'Bigadtruck Editorial',
+    cover: '/images/blog/ooh-advertising.svg',
+    tags: ['Regional', 'Creative', 'India', 'Media'],
+    summary: [
+      'Most of India consumes content in a language other than English.',
+      'Translation is not localisation — the idea itself has to be built in-language.',
+      'Regional inventory is often cheaper and less contested than English/Hindi.',
+      'Start with one high-value language, build native creative, then scale.',
+    ],
+    body: [
+      {
+        type: 'p',
+        text: 'Walk through any Indian city and the signage tells you the truth: people live, shop and scroll in their own language. Yet most brand campaigns are still conceived in English, approved in English, and only then handed to a translator. The result is creative that is technically correct and emotionally flat — a message that reaches the audience but never quite lands.',
+      },
+      {
+        type: 'stats',
+        caption: 'Why regional creative pays',
+        items: [
+          { value: '1st', label: 'Language the audience actually thinks in' },
+          { value: '↓', label: 'Often lower CPMs than English/Hindi inventory' },
+          { value: '↑', label: 'Higher recall when the idea is native, not translated' },
+        ],
+      },
+      { type: 'h2', text: 'Translation is not localisation' },
+      {
+        type: 'p',
+        text: 'A translated tagline carries the words but drops the wordplay, the reference, the joke that would have made someone smile and remember. Real localisation starts earlier: the insight, the hook and the humour are built in the language from the first draft. Sometimes that means a completely different idea for each market — and that is the point. You are not selling the same ad in five languages; you are having the right conversation in each one.',
+      },
+      { type: 'h2', text: 'Where the efficiency hides' },
+      {
+        type: 'ul',
+        items: [
+          'Regional digital and OOH inventory is frequently less contested — the same rupee buys more attention.',
+          'Regional creators command real trust in their communities, often at a fraction of a national celebrity’s fee.',
+          'Native creative earns organic shares that translated creative rarely does.',
+        ],
+      },
+      {
+        type: 'quote',
+        text: 'You do not win a market by shouting your message louder in a language it does not think in. You win by speaking first, in the language it dreams in.',
+      },
+      { type: 'h2', text: 'How to start without boiling the ocean' },
+      {
+        type: 'p',
+        text: 'Pick one high-value language where you already have demand, and build genuinely native creative for it — not a translation, an original. Measure it against your English/Hindi control. When it wins, you have both the confidence and the template to scale to the next language. Do that a few times and regional stops being a checkbox and becomes your cheapest source of growth.',
+      },
+      {
+        type: 'callout',
+        title: 'The bottom line',
+        text: 'India is not one audience that happens to speak English. It is many audiences, each waiting for a brand that bothers to speak first, in their language.',
+      },
+    ],
+  },
+  {
+    slug: 'micro-influencers-vs-celebrities-india',
+    title: 'Micro-influencers vs celebrities: the math most Indian brands get wrong',
+    excerpt:
+      'A celebrity buys you reach and a headline. A network of trusted micro-creators often buys you something harder to fake — belief. Here is how to think about the trade, not just the fee.',
+    category: 'Digital',
+    date: '2026-07-07',
+    readMins: 6,
+    author: 'Bigadtruck Editorial',
+    cover: '/images/blog/whatsapp-marketing.svg',
+    tags: ['Influencer', 'Social', 'Creators', 'India'],
+    summary: [
+      'Celebrities buy reach and instant credibility; micro-creators buy trust and niche fit.',
+      'Judge creators on engaged, relevant audience — not follower count.',
+      'A spread of micro-creators de-risks a campaign a single face cannot.',
+      'Match the tool to the job: awareness spike vs sustained belief.',
+    ],
+    body: [
+      {
+        type: 'p',
+        text: 'The reflex, when the budget is big enough, is to sign a famous face. It is a clean story for the boardroom and it does buy something real: mass reach and a borrowed halo. But a lot of Indian brands stop the analysis there — at the fee and the follower count — and miss the more useful question: what are you actually trying to buy?',
+      },
+      {
+        type: 'stats',
+        caption: 'What each actually buys',
+        items: [
+          { value: 'Reach', label: 'Celebrity — scale and a headline' },
+          { value: 'Trust', label: 'Micro-creator — niche belief and fit' },
+          { value: 'Spread', label: 'Many creators — de-risked, always-on' },
+        ],
+      },
+      { type: 'h2', text: 'Follower count is the wrong number' },
+      {
+        type: 'p',
+        text: 'A creator with 30,000 genuinely engaged followers in a specific city or interest can move more real behaviour than a star with millions of passive ones. The metric that matters is not audience size — it is engaged, relevant audience. Before you look at reach, look at the comments: are they real people asking real questions, or a wall of emojis?',
+      },
+      { type: 'h2', text: 'Why a spread beats a single bet' },
+      {
+        type: 'ul',
+        items: [
+          'One face is one point of failure — a bad news cycle takes your whole campaign with it.',
+          'Twenty micro-creators produce twenty native takes on your message, in twenty communities.',
+          'You learn faster: some creators will outperform, and you double down on what works.',
+        ],
+      },
+      {
+        type: 'quote',
+        text: 'A celebrity makes people aware of you. The right micro-creator makes their community believe you. Awareness is rented; belief compounds.',
+      },
+      { type: 'h2', text: 'So which one?' },
+      {
+        type: 'p',
+        text: 'Match the tool to the job. Launching something that needs a national awareness spike in a week? A celebrity earns its fee. Building durable trust in specific communities, or selling a considered purchase? A network of well-chosen micro-creators usually returns more per rupee — and keeps returning after the campaign ends.',
+      },
+      {
+        type: 'callout',
+        title: 'The bottom line',
+        text: 'Do not buy a face because it is famous. Buy the outcome you need — reach or belief — and pick the creator, big or small, who actually delivers it.',
+      },
+    ],
+  },
 ];
