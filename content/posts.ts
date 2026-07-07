@@ -407,4 +407,76 @@ export const posts: Post[] = [
       },
     ],
   },
+  {
+    slug: 'trends-shaping-indian-advertising-now',
+    title: 'The shifts reshaping Indian advertising right now',
+    excerpt:
+      'Not fads — the structural changes quietly rewriting how brands buy attention in India: AI in the creative pipeline, retail media, connected TV, vernacular-first, and the privacy reset. What each means for your plan.',
+    category: 'Media',
+    date: '2026-07-07',
+    readMins: 7,
+    author: 'Bigadtruck Editorial',
+    cover: '/images/blog/ai-advertising.svg',
+    tags: ['Trends', 'Media', 'AI', 'India'],
+    featured: true,
+    summary: [
+      'AI has moved from novelty to the everyday creative and media pipeline.',
+      'Retail media and connected TV are becoming core line items, not experiments.',
+      'Vernacular-first is where the next audiences (and cheaper attention) are.',
+      'Privacy changes make first-party data and consented channels the safe ground.',
+    ],
+    body: [
+      {
+        type: 'p',
+        text: 'It is easy to confuse noise with change. Every quarter brings a new platform feature and a new buzzword. But underneath the noise, a handful of structural shifts are genuinely rewriting how brands win attention in India — and they are worth planning around, not chasing.',
+      },
+      {
+        type: 'stats',
+        caption: 'Five shifts to plan around',
+        items: [
+          { value: 'AI', label: 'From novelty to everyday pipeline' },
+          { value: 'Retail', label: 'Media networks as a core buy' },
+          { value: 'CTV', label: 'Connected TV joins the plan' },
+        ],
+      },
+      { type: 'h2', text: '1. AI is now in the pipeline, not on the poster' },
+      {
+        type: 'p',
+        text: 'The interesting use of AI is no longer a one-off stunt — it is the quiet plumbing. Teams use it to generate and test more creative variants, to draft and resize at speed, and to optimise media in near real time. The winners are not the ones who use AI the most; they are the ones who keep human judgement on strategy and taste while letting AI take the grind.',
+      },
+      { type: 'h2', text: '2. Retail media and commerce-led attention' },
+      {
+        type: 'p',
+        text: 'Some of the most valuable ad inventory now sits next to the buy button — on marketplaces, quick-commerce apps and retailer platforms, where intent is highest. Treating retail media as a core line item, wired to your performance goals, is fast becoming table stakes rather than an experiment.',
+      },
+      { type: 'h2', text: '3. Connected TV blurs brand and performance' },
+      {
+        type: 'p',
+        text: 'As viewing shifts to streaming, connected TV gives brands big-screen impact with digital-style targeting and measurement. It is where a brand story can be told at scale and still be accountable — closing the old gap between a TV spot and a trackable outcome.',
+      },
+      { type: 'h2', text: '4. Vernacular-first, not English-translated' },
+      {
+        type: 'ul',
+        items: [
+          'The next wave of audiences consumes in regional languages first.',
+          'Native creative — built in-language — outperforms translated creative.',
+          'Regional inventory and creators often deliver cheaper, more trusted attention.',
+        ],
+      },
+      { type: 'h2', text: '5. The privacy reset rewards first-party data' },
+      {
+        type: 'p',
+        text: 'As tracking tightens, the brands that thrive are the ones that own their relationship with the customer — first-party data, consented channels like WhatsApp, and content people choose to engage with. Borrowed audiences are getting harder to reach; owned ones compound.',
+      },
+      {
+        type: 'quote',
+        text: 'The brands that win the next few years will not be the ones that adopted every trend. They will be the ones that read which shifts were structural — and built for those.',
+      },
+      {
+        type: 'callout',
+        title: 'The bottom line',
+        text: 'Treat these five as the board you are playing on, not options on a menu. Build AI into the workflow, put money where intent is, tell stories on the big screen, speak in-language, and own your data. That is a plan, not a trend chase.',
+      },
+    ],
+  },
 ];
