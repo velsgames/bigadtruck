@@ -93,10 +93,32 @@ export const posts: Post[] = [
           'Mobile ad trucks — the format we were named for — to put a full-motion, full-scale ad exactly where the audience is, when it matters.',
         ],
       },
+      {
+        type: 'table',
+        caption: 'OOH format layers — what each is best for',
+        headers: ['Format', 'Best for', 'How to measure it'],
+        rows: [
+          ['Hoardings & gantries', 'Always-on presence on key corridors', 'Route impression modelling, brand-lift'],
+          ['Transit (bus / auto / cab)', 'City-wide reach and frequency', 'Coverage mapping, QR/vanity URLs'],
+          ['Transit shelters & malls', 'Dwell-time, premium context', 'Footfall lift near sites'],
+          ['Mobile ad trucks', 'Targeted, event- and area-specific hits', 'Geo-fenced retargeting, on-site response'],
+        ],
+      },
       { type: 'h2', text: 'The old objection: “but you cannot measure it”' },
       {
         type: 'p',
         text: 'That is no longer true. Modern OOH plans are measured — with route-level impression modelling, QR and vanity-URL response tracking, geo-fenced retargeting of people who passed a site, and store-level footfall lift studies. Treat OOH as the awareness engine and digital as the response layer, wire the two together, and you can attribute the lift rather than guess at it.',
+      },
+      { type: 'h2', text: 'The measurement toolkit' },
+      {
+        type: 'ul',
+        items: [
+          'Route & impression modelling — estimate real reach and frequency by site and daypart.',
+          'QR codes & vanity URLs — give every site a trackable other end.',
+          'Geo-fenced retargeting — serve digital ads to devices that passed your sites.',
+          'Footfall lift studies — measure store visits near active sites vs control areas.',
+          'Brand-lift surveys — test recall and consideration before and after the burst.',
+        ],
       },
       {
         type: 'quote',
@@ -162,9 +184,31 @@ export const posts: Post[] = [
         ],
       },
       {
+        type: 'table',
+        caption: 'Funnel leak: landing-page + form vs click-to-WhatsApp',
+        headers: ['Step', 'Ad → landing page → form', 'Ad → WhatsApp chat'],
+        rows: [
+          ['First touch', 'Cold page load, more to read', 'Mid-conversation, with context'],
+          ['Friction', 'Form fields, trust barrier', 'A channel they already use'],
+          ['Drop-off points', 'Page, form, thank-you', 'Far fewer'],
+          ['Follow-up', 'Email — often unread', 'On-channel, high open rate'],
+          ['Best metric', 'Cost per form fill', 'Cost per qualified lead / booking'],
+        ],
+      },
+      {
         type: 'quote',
         text: 'Performance marketing used to end at the click. On WhatsApp it ends at a booked appointment — if you design the conversation as carefully as the creative.',
         cite: 'Bigadtruck lead-generation team',
+      },
+      { type: 'h2', text: 'A simple qualification flow' },
+      {
+        type: 'ul',
+        items: [
+          'Message 1 — greet and ask what they need, in one line.',
+          'Message 2 — capture name and city; confirm intent.',
+          'Message 3 — offer the next step (callback, quote, booking) and route hot leads to a human.',
+          'After: a short, spaced follow-up sequence — helpful, never spammy.',
+        ],
       },
       { type: 'h2', text: 'Measure what actually matters' },
       {
@@ -224,6 +268,18 @@ export const posts: Post[] = [
         text: 'AI is a brilliant intern and a poor strategist. It does not know your brand’s line in the sand, cannot feel when a joke lands wrong for a local audience, and will confidently optimise toward the wrong goal if you point it there. Strategy, taste, cultural judgement, and the decision of what not to make — those stay human.',
       },
       {
+        type: 'table',
+        caption: 'Who owns what — machines vs people',
+        headers: ['Task', 'AI does', 'Human owns'],
+        rows: [
+          ['Creative variants', 'Generate and resize at scale', 'The core idea and the brand line'],
+          ['Media buying', 'Adjust bids in real time', 'The strategy and the guardrails'],
+          ['Copy', 'First drafts, alternatives', 'Voice, nuance, final call'],
+          ['Insight', 'Read thousands of comments', 'What it means and what to do'],
+          ['Localisation', 'Rough translation', 'Cultural judgement, taste'],
+        ],
+      },
+      {
         type: 'quote',
         text: 'AI lowers the cost of making things. That makes judgement — knowing what is worth making — the scarce, valuable skill.',
       },
@@ -276,8 +332,31 @@ export const posts: Post[] = [
         ],
       },
       {
+        type: 'table',
+        caption: 'What sinks a DPR vs what makes it bankable',
+        headers: ['Section', 'Weak (stalls in review)', 'Bankable (gets approved)'],
+        rows: [
+          ['Demand', 'Optimistic, unsourced', 'Evidence-based, with sensitivity analysis'],
+          ['Costing', 'Round numbers, hidden gaps', 'Line-item, current rates, contingencies stated'],
+          ['Cash flow', 'Works only if all goes well', 'Survives late revenue and cost overruns'],
+          ['Risk', 'Glossed over', 'Named honestly, each with a mitigation'],
+          ['Compliance', 'Discovered late', 'Mapped up front'],
+        ],
+      },
+      {
         type: 'quote',
         text: 'Lenders do not fund optimism. They fund a report that has already asked the hard questions and answered them.',
+      },
+      { type: 'h2', text: 'A pre-submission checklist' },
+      {
+        type: 'ul',
+        items: [
+          'Every major number is traceable to a source or a stated assumption.',
+          'A sensitivity analysis shows what happens if demand or cost misses.',
+          'Contingencies are explicit, not buried.',
+          'Each key risk has a named owner and a mitigation.',
+          'All clearances and approvals are listed with their status.',
+        ],
       },
       { type: 'h2', text: 'Why it pays to get it right the first time' },
       {
